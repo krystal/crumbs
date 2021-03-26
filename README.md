@@ -2,7 +2,7 @@
 
 ## Prerequesites
 
-You will need a version of node > 12.0.0
+You will need a version of node.js installed on your machine.
 
 ## Installation
 
