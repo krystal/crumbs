@@ -4,7 +4,7 @@ import { editScreen } from './components/editScreen';
 import { cookieBanner } from './components/cookieBanner';
 import './main.css';
 
-export default class Crumbs extends EventEmitter {
+class Crumbs extends EventEmitter {
   constructor() {
     super();
     this.accepted = ['analytics', 'functional', 'targeting'];
@@ -56,32 +56,33 @@ export default class Crumbs extends EventEmitter {
 
       // Set the editScreen property so we have access to hide it later on.
       this.editScreen = document.querySelector('.crumbs-edit');
+      console.log(this.editScreen);
       this.setFocus(this.editScreen);
       this.areWeAllowedToScroll(true);
-      this.closeOnEscape();
+      this.setCloseOnEscape();
     });
   }
 
   /**
    * Set the current focus on a particular element
-   * @param  {DOMNode} element The element that we want to set focus on
+   * @param  {DOM Node} element The element that we want to set focus on
    */
   setFocus(element) {
     element.focus();
   }
 
+  closeOnEscape(event) {
+    if (event.key === 'Escape') {
+      this.editScreen.remove();
+      this.setFocus(this.editSettingsButton);
+      this.areWeAllowedToScroll();
+    }
+  }
   /**
    * Close the edit settings modal when using the Escape key
    */
-  closeOnEscape() {
-    document.addEventListener('keydown', (e) => {
-      console.log(e.key);
-      if (e.key === 'Escape') {
-        this.editScreen.remove();
-        this.setFocus(this.editSettingsButton);
-        this.areWeAllowedToScroll();
-      }
-    });
+  setCloseOnEscape() {
+    document.addEventListener('keydown', this.closeOnEscape.bind(this));
   }
 
   /**
@@ -90,8 +91,10 @@ export default class Crumbs extends EventEmitter {
   areWeAllowedToScroll(scroll) {
     if (scroll) {
       document.body.style.overflow = 'hidden';
+      document.body.classList.add('crumbs-overlay');
     } else {
       document.body.style.overflow = '';
+      document.body.classList.remove('crumbs-overlay');
     }
   }
 
@@ -129,12 +132,10 @@ export default class Crumbs extends EventEmitter {
 
       this.removeBanner(this.editScreen);
       this.removeBanner(this.banner);
-
-      // Based on the selected checkboxes we will add the relevant cookies
       this.emit('onSave', accepted);
-      pubsub.publish('cookiesUpdated', accepted);
       this.setAcceptanceCookie();
       this.areWeAllowedToScroll();
+      pubsub.publish('cookiesUpdated', accepted);
     });
   }
 
@@ -167,7 +168,8 @@ export default class Crumbs extends EventEmitter {
    * Set the cookie_consent cookie that determines whether the banner is shown or not
    */
   setAcceptanceCookie() {
-    this.setCookie('cookie_consent', true, 365);
+    // I am setting this really low for testing purposes
+    this.setCookie('cookie_consent', true, 0.001);
   }
 
   /**
@@ -195,13 +197,19 @@ export default class Crumbs extends EventEmitter {
   }
 }
 
-const c = new Crumbs();
-const cookieList = document.querySelector('.accepted-cookies');
+////////////////////////////////////////////////////////////////////////
+/// NOTE: This is just an example of us consuming the class in a project
+////////////////////////////////////////////////////////////////////////
+document.addEventListener('DOMContentLoaded', () => {
+  const c = new Crumbs();
 
-c.on('onSave', (preferences) => {
-  preferences.forEach((preference) => {
-    const li = document.createElement('li');
-    li.textContent = preference;
-    cookieList.append(li);
+  const cookieList = document.querySelector('.accepted-cookies');
+
+  c.on('onSave', (preferences) => {
+    preferences.forEach((preference) => {
+      const li = document.createElement('li');
+      li.textContent = preference;
+      cookieList.append(li);
+    });
   });
 });
