@@ -4,7 +4,7 @@ import { editScreen } from './components/editScreen';
 import { cookieBanner } from './components/cookieBanner';
 import './main.css';
 
-class Crumbs extends EventEmitter {
+export default class Crumbs extends EventEmitter {
   constructor() {
     super();
     this.accepted = ['analytics', 'functional', 'targeting'];
@@ -79,6 +79,7 @@ class Crumbs extends EventEmitter {
       if (e.key === 'Escape') {
         this.editScreen.remove();
         this.setFocus(this.editSettingsButton);
+        this.areWeAllowedToScroll();
       }
     });
   }
@@ -133,6 +134,7 @@ class Crumbs extends EventEmitter {
       this.emit('onSave', accepted);
       pubsub.publish('cookiesUpdated', accepted);
       this.setAcceptanceCookie();
+      this.areWeAllowedToScroll();
     });
   }
 
@@ -193,14 +195,13 @@ class Crumbs extends EventEmitter {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const cookieList = document.querySelector('.accepted-cookies');
-  const cookies = new Crumbs();
-  cookies.on('onSave', (preferences) => {
-    preferences.forEach((preference) => {
-      const li = document.createElement('li');
-      li.textContent = preference;
-      cookieList.append(li);
-    });
+const c = new Crumbs();
+const cookieList = document.querySelector('.accepted-cookies');
+
+c.on('onSave', (preferences) => {
+  preferences.forEach((preference) => {
+    const li = document.createElement('li');
+    li.textContent = preference;
+    cookieList.append(li);
   });
 });
