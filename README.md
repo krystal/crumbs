@@ -1,4 +1,6 @@
-# Cookies
+# Crumbs
+
+A small package that will determine which cookies a user is willing to accept.
 
 ## Prerequesites
 
