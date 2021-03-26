@@ -10,6 +10,7 @@ class Crumbs extends EventEmitter {
     this.accepted = ['analytics', 'functional', 'targeting'];
     this.banner = null;
     this.editScreen = null;
+    this.editSettingsButton = null;
     this.render();
   }
 
@@ -46,7 +47,7 @@ class Crumbs extends EventEmitter {
   editSettings() {
     // Build the edit modal
     const editSettingsButtons = document.querySelector('.crumbs-edit-settings');
-
+    this.editSettingsButton = editSettingsButtons;
     // Add the edit cookies modal to the DOM when selected
     editSettingsButtons.addEventListener('click', () => {
       document.body.insertAdjacentHTML('beforeend', editScreen);
@@ -56,11 +57,41 @@ class Crumbs extends EventEmitter {
       // Set the editScreen property so we have access to hide it later on.
       this.editScreen = document.querySelector('.crumbs-edit');
       this.setFocus(this.editScreen);
+      this.areWeAllowedToScroll(true);
+      this.closeOnEscape();
     });
   }
 
+  /**
+   * Set the current focus on a particular element
+   * @param  {DOMNode} element The element that we want to set focus on
+   */
   setFocus(element) {
     element.focus();
+  }
+
+  /**
+   * Close the edit settings modal when using the Escape key
+   */
+  closeOnEscape() {
+    document.addEventListener('keydown', (e) => {
+      console.log(e.key);
+      if (e.key === 'Escape') {
+        this.editScreen.remove();
+        this.setFocus(this.editSettingsButton);
+      }
+    });
+  }
+
+  /**
+   * Prevent scrolling when the edit cookie settings component is open
+   */
+  areWeAllowedToScroll(scroll) {
+    if (scroll) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
   }
 
   /**
@@ -70,7 +101,8 @@ class Crumbs extends EventEmitter {
     const editClose = document.querySelector('.crumbs-edit-close');
     editClose.addEventListener('click', () => {
       this.editScreen.remove();
-      this.setFocus(document.querySelector('.crumbs-edit-settings'));
+      this.setFocus(this.editSettingsButton);
+      this.areWeAllowedToScroll();
     });
   }
 
@@ -161,20 +193,14 @@ class Crumbs extends EventEmitter {
   }
 }
 
-//
-// This is us consuming the library in a project
-//
-
 document.addEventListener('DOMContentLoaded', () => {
-  const c = new Crumbs();
-  const acceptedCookies = document.querySelector('.accepted-cookies');
-
-  c.on('onSave', (preferences) => {
-    // Add the preferences to a fake list on the page
+  const cookieList = document.querySelector('.accepted-cookies');
+  const cookies = new Crumbs();
+  cookies.on('onSave', (preferences) => {
     preferences.forEach((preference) => {
       const li = document.createElement('li');
       li.textContent = preference;
-      acceptedCookies.append(li);
+      cookieList.append(li);
     });
   });
 });
