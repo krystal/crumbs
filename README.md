@@ -8,7 +8,7 @@ You will need a version of node.js installed on your machine.
 
 ## Installation and developing locally.
 
-1. Clone the repo via `git clone ${repo}`
+1. Clone the repo via `git clone git@github.com:krystal/crumbs.git`
 2. `npm install`
 3. `npm run dev` to start the deveopment server.
 4. Visit [http://localhost:4000](http://localhost:4000)
