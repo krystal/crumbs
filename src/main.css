@@ -130,32 +130,17 @@ button {
   margin-top: 8px;
 }
 
-.accepted-cookies {
-  align-items: center;
-  display: flex;
-  list-style-type: none;
-  justify-content: center;
-  text-align: center;
-}
-
-.accepted-cookies li {
-  background-color: ghostwhite;
-  margin: 0 4px;
-  max-width: 150px;
-  padding: 12px;
-}
-
 article p + p {
   margin-top: 16px;
 }
 
-.c-toggle label {
+.crumbs-toggle label {
   font-size: 12px;
   margin: 0 0.5em 0;
   cursor: pointer;
 }
 
-.c-toggle input[type='radio'] {
+.crumbs-toggle input[type='radio'] {
   display: inline-block;
   margin-right: -2px;
   width: 50%;
@@ -166,12 +151,12 @@ article p + p {
   cursor: pointer;
 }
 
-.c-toggle input[type='radio']:focus ~ .c-toggle__switcher {
+.crumbs-toggle input[type='radio']:focus ~ .crumbs-toggle__switcher {
   border: 3px solid #a8a8a8;
   top: -2px;
 }
 
-.c-toggle__wrapper {
+.crumbs-toggle__wrapper {
   font-size: 10px;
   display: inline-block;
   vertical-align: middle;
@@ -182,7 +167,7 @@ article p + p {
   position: relative;
 }
 
-.c-toggle__switcher {
+.crumbs-toggle__switcher {
   display: block;
   position: absolute;
   top: 0;
@@ -196,7 +181,7 @@ article p + p {
   z-index: 2;
 }
 
-.c-toggle__background {
+.crumbs-toggle__background {
   display: block;
   position: absolute;
   top: 0;
@@ -217,12 +202,12 @@ article p + p {
   overflow: hidden;
 }
 
-#on:checked ~ .c-toggle__switcher {
+#on:checked ~ .crumbs-toggle__switcher {
   right: 0px;
   left: 48%;
 }
 
-#on:checked ~ .c-toggle__background {
+#on:checked ~ .crumbs-toggle__background {
   background-color: #e0e0e0;
 }
 
