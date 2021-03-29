@@ -17,6 +17,36 @@ You will need a version of node.js installed on your machine.
 
 `npm run build` will create the minified bundle in the `dist` folder
 
+## Usage
+
+Crumbs returns a stringed array of the type cookies that are to be set.
+
+These types are:
+
+- functional
+- targeting
+- performance
+
+These are accessed by calling the `onSave` method after instantiation.
+
+```
+document.addEventListener('DOMContentLoaded', () => {
+
+  const cookies = new Crumbs();
+  cookies.on('onSave', (preferences) => {
+    if (preferences.includes('functional')) {
+      // Set some functional cookies
+    }
+    if (preferences.includes('targeting')) {
+      // Set some targeting cookies
+    }
+    if (preferences.includes('performance')) {
+      // Set some performance cookies
+    }
+  });
+});
+```
+
 ### Webpack Analyzer
 
 Possibly a bit overkill for this sort of project however when running the environment locally
