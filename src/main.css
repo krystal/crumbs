@@ -60,7 +60,7 @@ button {
   margin-top: 12px;
 }
 
-.crumbs-overlay {
+.crumbs-overlay::before {
   background-color: rgba(0, 0, 0, 0.4);
   content: '';
   top: 0;
@@ -68,7 +68,7 @@ button {
   height: 100%;
   position: fixed;
   width: 100%;
-  z-index: -1;
+  z-index: 1;
 }
 
 .crumbs-edit-close {

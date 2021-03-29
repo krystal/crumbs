@@ -15,7 +15,7 @@ class Crumbs extends EventEmitter {
   }
 
   /**
-   * Render the cookie banner if cookie_consent !== true
+   * Render the cookie banner and attach various elements
    */
   render() {
     // Render the Cookie banner if the cookie_consent cookie isn't true
