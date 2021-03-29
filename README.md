@@ -4,7 +4,7 @@ A small package that will determine which cookies a user is willing to accept.
 
 ## Prerequesites
 
-You will need a version of node.js installed on your machine.
+Node > 10.13
 
 ## Installation and developing locally.
 
