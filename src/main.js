@@ -57,7 +57,7 @@ class Crumbs extends EventEmitter {
       // Set the editScreen property so we have access to hide it later on.
       this.editScreen = document.querySelector('.crumbs-edit');
       this.setFocus(this.editScreen);
-      this.areWeAllowedToScroll(true);
+      this.disableScroll();
       this.setCloseOnEscape();
     });
   }
@@ -78,7 +78,7 @@ class Crumbs extends EventEmitter {
     if (event.key === 'Escape') {
       this.editScreen.remove();
       this.setFocus(this.editSettingsButton);
-      this.areWeAllowedToScroll();
+      this.enableScroll();
     }
   }
 
@@ -92,14 +92,17 @@ class Crumbs extends EventEmitter {
   /**
    * Prevent scrolling when the edit cookie settings component is open
    */
-  areWeAllowedToScroll(scroll) {
-    if (scroll) {
-      document.body.style.overflow = 'hidden';
-      document.body.classList.add('crumbs-overlay');
-    } else {
-      document.body.style.overflow = '';
-      document.body.classList.remove('crumbs-overlay');
-    }
+  disableScroll() {
+    document.body.style.overflow = 'hidden';
+    document.body.classList.add('crumbs-overlay');
+  }
+
+  /**
+   * Re-enable scrolling when the edit cookie settings component is closed
+   */
+  enableScroll() {
+    document.body.style.overflow = '';
+    document.body.classList.remove('crumbs-overlay');
   }
 
   /**
@@ -110,7 +113,7 @@ class Crumbs extends EventEmitter {
     editClose.addEventListener('click', () => {
       this.editScreen.remove();
       this.setFocus(this.editSettingsButton);
-      this.areWeAllowedToScroll();
+      this.enableScroll();
     });
   }
 
@@ -138,7 +141,7 @@ class Crumbs extends EventEmitter {
       this.removeBanner(this.banner);
       this.emit('onSave', accepted);
       this.setAcceptanceCookie();
-      this.areWeAllowedToScroll();
+      this.enableScroll();
       pubsub.publish('cookiesUpdated', accepted);
     });
   }
