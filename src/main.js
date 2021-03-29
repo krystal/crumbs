@@ -7,7 +7,7 @@ import './main.css';
 class Crumbs extends EventEmitter {
   constructor() {
     super();
-    this.accepted = ['analytics', 'functional', 'targeting'];
+    this.accepted = ['performance', 'functional', 'targeting'];
     this.banner = null;
     this.editScreen = null;
     this.editSettingsButton = null;
@@ -56,7 +56,6 @@ class Crumbs extends EventEmitter {
 
       // Set the editScreen property so we have access to hide it later on.
       this.editScreen = document.querySelector('.crumbs-edit');
-      console.log(this.editScreen);
       this.setFocus(this.editScreen);
       this.areWeAllowedToScroll(true);
       this.setCloseOnEscape();
@@ -117,17 +116,17 @@ class Crumbs extends EventEmitter {
   editAccept() {
     const editAccept = document.querySelector('.crumbs-edit-accept');
     editAccept.addEventListener('click', () => {
-      const checkboxes = Array.from(
-        document.querySelectorAll('input[type="checkbox"]')
+      const radioButtons = Array.from(
+        document.querySelectorAll('input[type="radio"]')
       );
-      const accepted = checkboxes
-        .filter((checkbox) => {
-          if (checkbox.checked === true) {
-            return checkbox;
+      const accepted = radioButtons
+        .filter((radio) => {
+          if (radio.id === 'on' && radio.checked === true) {
+            return radio;
           }
         })
-        .map((c) => {
-          return c.id;
+        .map((r) => {
+          return r.name;
         });
 
       this.removeBanner(this.editScreen);
@@ -169,7 +168,7 @@ class Crumbs extends EventEmitter {
    */
   setAcceptanceCookie() {
     // I am setting this really low for testing purposes
-    this.setCookie('cookie_consent', true, 0.001);
+    this.setCookie('cookie_consent', true, 0.0001);
   }
 
   /**
@@ -206,6 +205,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const cookieList = document.querySelector('.accepted-cookies');
 
   c.on('onSave', (preferences) => {
+    if (preferences.includes('functional')) {
+      console.log('we can allow functional cookies');
+    }
+    if (preferences.includes('targeting')) {
+      console.log('we can allow targeting cookies');
+    }
+    if (preferences.includes('performance')) {
+      console.log('we can allow performance cookies');
+    }
     preferences.forEach((preference) => {
       const li = document.createElement('li');
       li.textContent = preference;

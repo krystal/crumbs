@@ -18,6 +18,7 @@ button {
   box-shadow: none;
   border: 1px solid gainsboro;
   border-radius: 4px;
+  cursor: pointer;
   font: inherit;
   padding: 1rem;
   max-width: 250px;
@@ -48,16 +49,11 @@ button {
   border-radius: 8px;
   left: 50%;
   max-width: 700px;
-  padding: 20px;
   position: fixed;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 90%;
   z-index: 99;
-}
-
-.crumbs-edit * + * {
-  margin-top: 12px;
 }
 
 .crumbs-overlay::before {
@@ -77,6 +73,53 @@ button {
   right: 8px;
   top: 8px;
   padding: 8px;
+}
+
+.crumbs-edit__section {
+  align-items: center;
+  border: 1px solid #d0d4d5;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  padding: 24px;
+}
+
+.crumbs-edit__description {
+  margin-top: 12px;
+}
+
+.crumbs-edit__container {
+  padding: 40px 40px 100px 40px;
+}
+
+.crumbs-edit__block {
+  flex: 0 1 80%;
+}
+
+.crumbs-edit__block p {
+  margin-top: 12px;
+}
+
+.crumbs-edit__content {
+  position: static;
+  max-height: 500px;
+  overflow: auto;
+}
+
+.crumbs-edit__block p {
+  font-size: 14px;
+}
+
+.crumbs-edit__cta {
+  background-color: gainsboro;
+  bottom: 0;
+  left: 0;
+  padding: 12px 0;
+  position: fixed;
+  text-align: center;
+  width: 100%;
+  z-index: 100;
 }
 
 .crumbs-banner__title {
@@ -106,47 +149,81 @@ article p + p {
   margin-top: 16px;
 }
 
-.crumbs-checkbox + label {
-  align-items: flex-start;
-  display: inline-flex;
-  line-height: 1.4;
-  position: relative;
+.c-toggle label {
+  font-size: 12px;
+  margin: 0 0.5em 0;
+  cursor: pointer;
 }
 
-.crumbs-checkbox-hidden {
-  opacity: 0;
-  position: absolute;
-}
-
-.crumbs-checkbox + label::before {
-  border: 1px solid gray;
-  border-radius: 2px;
-  content: '';
+.c-toggle input[type='radio'] {
   display: inline-block;
-  height: 24px;
-  margin-right: 12px;
+  margin-right: -2px;
+  width: 50%;
+  height: 100%;
+  opacity: 0;
   position: relative;
-  top: calc((1em * 1.2 - 24px) / 2);
-  width: 24px;
-}
-.crumbs-checkbox:checked + label::after {
-  background: rgb(37, 37, 37);
-  box-shadow: 2px 0 0 rgb(37, 37, 37), 4px 0 0 rgb(37, 37, 37),
-    4px -2px 0 rgb(37, 37, 37), 4px -4px 0 rgb(37, 37, 37),
-    4px -6px 0 rgb(37, 37, 37), 4px -8px 0 rgb(37, 37, 37);
-  content: '';
-  height: 2px;
-  left: 8px;
-  position: absolute;
-  top: 10px;
-  transform: rotate(45deg);
-  width: 2px;
+  z-index: 1;
+  cursor: pointer;
 }
 
-.crumbs-checkbox:focus + label,
-.crumbs-checkbox:active + label {
-  outline: 4px solid black;
-  outline-offset: 2px;
+.c-toggle input[type='radio']:focus ~ .c-toggle__switcher {
+  border: 3px solid #a8a8a8;
+  top: -2px;
+}
+
+.c-toggle__wrapper {
+  font-size: 10px;
+  display: inline-block;
+  vertical-align: middle;
+  width: 60px;
+  height: 30px;
+  border-radius: 30px;
+  border: 1px solid #ddd;
+  position: relative;
+}
+
+.c-toggle__switcher {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 1px;
+  right: 100%;
+  width: 50%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #858585;
+  transition: all 0.1s ease-out;
+  z-index: 2;
+}
+
+.c-toggle__background {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  border-radius: 30px;
+  transition: all 0.4s ease-out;
+}
+
+.crumbs__hidden {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+#on:checked ~ .c-toggle__switcher {
+  right: 0px;
+  left: 48%;
+}
+
+#on:checked ~ .c-toggle__background {
+  background-color: #e0e0e0;
 }
 
 @media screen and (min-width: 900px) {
@@ -161,14 +238,6 @@ article p + p {
 
   .crumbs-banner button {
     margin: 0 8px;
-  }
-
-  .crumbs-edit {
-    padding: 40px;
-  }
-
-  .crumbs-edit__content {
-    padding-right: 4rem;
   }
 
   .crumbs-edit-close {
