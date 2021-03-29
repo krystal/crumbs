@@ -130,10 +130,6 @@ button {
   margin-top: 8px;
 }
 
-article p + p {
-  margin-top: 16px;
-}
-
 .crumbs-toggle label {
   font-size: 12px;
   margin: 0 0.5em 0;
@@ -153,7 +149,7 @@ article p + p {
 
 .crumbs-toggle input[type='radio']:focus ~ .crumbs-toggle__switcher {
   border: 3px solid #a8a8a8;
-  top: -2px;
+  top: 0px;
 }
 
 .crumbs-toggle__wrapper {

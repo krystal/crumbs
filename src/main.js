@@ -70,6 +70,10 @@ class Crumbs extends EventEmitter {
     element.focus();
   }
 
+  /**
+   * The function that closes the edit cookie settings screen
+   * @param  {Event Object} event The element that we want to set focus on
+   */
   closeOnEscape(event) {
     if (event.key === 'Escape') {
       this.editScreen.remove();
@@ -77,8 +81,9 @@ class Crumbs extends EventEmitter {
       this.areWeAllowedToScroll();
     }
   }
+
   /**
-   * Close the edit settings modal when using the Escape key
+   * Add event listener to close the edit settings screen
    */
   setCloseOnEscape() {
     document.addEventListener('keydown', this.closeOnEscape.bind(this));
@@ -141,7 +146,7 @@ class Crumbs extends EventEmitter {
   /**
    * Find out if the cookie_consent cookie is set
    * @param  {String} cookieName The name of the cookie we are checking
-   * @returns {Boolean}
+   * @returns {String} true | false
    */
   getCookie(cookieName) {
     const name = cookieName + '=';
