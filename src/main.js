@@ -64,7 +64,7 @@ class Crumbs extends EventEmitter {
 
   /**
    * Set the current focus on a particular element
-   * @param  {DOM Node} element The element that we want to set focus on
+   * @param  {HTMLElement} element The element that we want to set focus on
    */
   setFocus(element) {
     element.focus();
@@ -181,7 +181,7 @@ class Crumbs extends EventEmitter {
 
   /**
    * Remove an element from the view
-   * @param  {Node} banner The banner we wish to remove
+   * @param  {HTMLElement} banner The banner we wish to remove
    */
   removeBanner(banner) {
     banner.remove();
