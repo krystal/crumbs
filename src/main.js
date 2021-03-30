@@ -213,6 +213,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const cookieList = document.querySelector('.accepted-cookies');
 
   c.on('onSave', (preferences) => {
+    if (!preferences.length) {
+      console.log('we only want the necessary cookies please!');
+    }
     if (preferences.includes('functional')) {
       console.log('we can allow functional cookies');
     }
