@@ -1,5 +1,4 @@
 import { EventEmitter } from 'events';
-import { pubsub } from './components/pubsub';
 import { editScreen } from './components/editScreen';
 import { cookieBanner } from './components/cookieBanner';
 import './main.css';
@@ -36,20 +35,22 @@ class Crumbs extends EventEmitter {
         this.emit('onSave', this.accepted);
       });
 
-      this.editSettings();
-      pubsub.subscribe('cookiesUpdated');
+      // Select our edit button, assign it to the constructor and pass
+      // it to our editSettings method
+      const editSettingsButtons = document.querySelector(
+        '.crumbs-edit-settings'
+      );
+      this.editSettingsButton = editSettingsButtons;
+      this.editSettings(this.editSettingsButton);
     }
   }
 
   /**
    * Add the editScreen component when the 'Edit Settings' button is clicked
    */
-  editSettings() {
-    // Build the edit modal
-    const editSettingsButtons = document.querySelector('.crumbs-edit-settings');
-    this.editSettingsButton = editSettingsButtons;
+  editSettings(editHandler) {
     // Add the edit cookies modal to the DOM when selected
-    editSettingsButtons.addEventListener('click', () => {
+    editHandler.addEventListener('click', () => {
       document.body.insertAdjacentHTML('beforeend', editScreen);
       this.editAccept();
       this.closeEditScreen();
@@ -106,7 +107,8 @@ class Crumbs extends EventEmitter {
   }
 
   /**
-   * Close the edit screen (not destroy)
+   * Close the edit screen (not destroy), set the focus back to the edit settings button
+   * and enable scrolling of the viewport again
    */
   closeEditScreen() {
     const editClose = document.querySelector('.crumbs-edit-close');
@@ -142,7 +144,6 @@ class Crumbs extends EventEmitter {
       this.emit('onSave', accepted);
       this.setAcceptanceCookie();
       this.enableScroll();
-      pubsub.publish('cookiesUpdated', accepted);
     });
   }
 
@@ -185,7 +186,6 @@ class Crumbs extends EventEmitter {
    */
   removeBanner(banner) {
     banner.remove();
-    pubsub.unsubscribe('cookiesUpdated');
   }
 
   /**
@@ -213,18 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cookieList = document.querySelector('.accepted-cookies');
 
   c.on('onSave', (preferences) => {
-    if (!preferences.length) {
-      console.log('we only want the necessary cookies please!');
-    }
-    if (preferences.includes('functional')) {
-      console.log('we can allow functional cookies');
-    }
-    if (preferences.includes('targeting')) {
-      console.log('we can allow targeting cookies');
-    }
-    if (preferences.includes('performance')) {
-      console.log('we can allow performance cookies');
-    }
+    cookieList.innerHTML = '';
     preferences.forEach((preference) => {
       const li = document.createElement('li');
       li.textContent = preference;
