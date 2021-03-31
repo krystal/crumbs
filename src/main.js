@@ -42,6 +42,18 @@ class Crumbs extends EventEmitter {
       );
       this.editSettingsButton = editSettingsButtons;
       this.editSettings(this.editSettingsButton);
+
+      document.querySelector('.edit-cookies').addEventListener('click', () => {
+        document.body.insertAdjacentHTML('beforeend', editScreen);
+        this.editAccept();
+        this.closeEditScreen();
+
+        // Set the editScreen property so we have access to hide it later on.
+        this.editScreen = document.querySelector('.crumbs-edit');
+        this.setFocus(this.editScreen);
+        this.disableScroll();
+        this.setCloseOnEscape();
+      });
     }
   }
 
@@ -50,17 +62,7 @@ class Crumbs extends EventEmitter {
    */
   editSettings(editHandler) {
     // Add the edit cookies modal to the DOM when selected
-    editHandler.addEventListener('click', () => {
-      document.body.insertAdjacentHTML('beforeend', editScreen);
-      this.editAccept();
-      this.closeEditScreen();
-
-      // Set the editScreen property so we have access to hide it later on.
-      this.editScreen = document.querySelector('.crumbs-edit');
-      this.setFocus(this.editScreen);
-      this.disableScroll();
-      this.setCloseOnEscape();
-    });
+    editHandler.addEventListener('click', this.showSettings.bind(this));
   }
 
   /**
@@ -119,6 +121,18 @@ class Crumbs extends EventEmitter {
     });
   }
 
+  showSettings() {
+    document.body.insertAdjacentHTML('beforeend', editScreen);
+    this.editAccept();
+    this.closeEditScreen();
+
+    // Set the editScreen property so we have access to hide it later on.
+    this.editScreen = document.querySelector('.crumbs-edit');
+    this.setFocus(this.editScreen);
+    this.disableScroll();
+    this.setCloseOnEscape();
+  }
+
   /**
    * Emits the onSave event when preferences are set and provides a stringed array back to the
    * consumer to determine which cookies have been selected
@@ -138,10 +152,11 @@ class Crumbs extends EventEmitter {
         .map((r) => {
           return r.name;
         });
+      this.accepted = accepted;
 
       this.removeBanner(this.editScreen);
       this.removeBanner(this.banner);
-      this.emit('onSave', accepted);
+      this.emit('onSave', this.accepted);
       this.setAcceptanceCookie();
       this.enableScroll();
     });
@@ -211,6 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const c = new Crumbs();
 
   const cookieList = document.querySelector('.accepted-cookies');
+  const editCookiePreferences = document.querySelector('.edit-cookies');
 
   c.on('onSave', (preferences) => {
     cookieList.innerHTML = '';
