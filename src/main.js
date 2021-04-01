@@ -10,6 +10,8 @@ class Crumbs extends EventEmitter {
     this.banner = null;
     this.editScreen = null;
     this.editSettingsButton = null;
+    this.editAcceptButton = null;
+    this.acceptance = null;
     this.render();
   }
 
@@ -43,13 +45,42 @@ class Crumbs extends EventEmitter {
       this.editSettingsButton = editSettingsButtons;
       this.editSettings(this.editSettingsButton);
 
+      // This sets up the editScreen component and adds it to memory for later use
+      const fragment = document
+        .createRange()
+        .createContextualFragment(editScreen);
+      const elementToAdd = fragment.firstElementChild;
+      this.editScreen = elementToAdd;
+
       document.querySelector('.edit-cookies').addEventListener('click', () => {
-        document.body.insertAdjacentHTML('beforeend', editScreen);
+        const radios = Array.from(
+          this.editScreen.querySelectorAll('input[type="radio"')
+        );
+        radios.forEach((radio) => {
+          radio.checked = false;
+        });
+
+        const radiosOn = radios.filter((radio) => {
+          return radio.id === 'on';
+        });
+
+        const newRadios = radiosOn.filter((radio) => {
+          if (this.accepted.includes(radio.name)) {
+            return radio;
+          }
+        });
+        newRadios.forEach((radio) => {
+          const update = this.editScreen.querySelector(
+            `#${radio.id}[name=${radio.name}]`
+          );
+          update.checked = true;
+        });
+
+        document.body.insertAdjacentElement('beforeend', this.editScreen);
+
         this.editAccept();
         this.closeEditScreen();
 
-        // Set the editScreen property so we have access to hide it later on.
-        this.editScreen = document.querySelector('.crumbs-edit');
         this.setFocus(this.editScreen);
         this.disableScroll();
         this.setCloseOnEscape();
@@ -113,21 +144,19 @@ class Crumbs extends EventEmitter {
    * and enable scrolling of the viewport again
    */
   closeEditScreen() {
-    const editClose = document.querySelector('.crumbs-edit-close');
+    const editClose = this.editScreen.querySelector('.crumbs-edit-close');
     editClose.addEventListener('click', () => {
       this.editScreen.remove();
       this.setFocus(this.editSettingsButton);
       this.enableScroll();
+      this.editAcceptButton.removeEventListener('click', this.acceptCookies);
     });
   }
 
   showSettings() {
-    document.body.insertAdjacentHTML('beforeend', editScreen);
+    document.body.insertAdjacentElement('beforeend', this.editScreen);
     this.editAccept();
     this.closeEditScreen();
-
-    // Set the editScreen property so we have access to hide it later on.
-    this.editScreen = document.querySelector('.crumbs-edit');
     this.setFocus(this.editScreen);
     this.disableScroll();
     this.setCloseOnEscape();
@@ -138,28 +167,34 @@ class Crumbs extends EventEmitter {
    * consumer to determine which cookies have been selected
    */
   editAccept() {
-    const editAccept = document.querySelector('.crumbs-edit-accept');
-    editAccept.addEventListener('click', () => {
-      const radioButtons = Array.from(
-        document.querySelectorAll('input[type="radio"]')
-      );
-      const accepted = radioButtons
-        .filter((radio) => {
-          if (radio.id === 'on' && radio.checked === true) {
-            return radio;
-          }
-        })
-        .map((r) => {
-          return r.name;
-        });
-      this.accepted = accepted;
+    const editAccept = this.editScreen.querySelector('.crumbs-edit-accept');
+    this.editAcceptButton = editAccept;
+    this.acceptance = this.acceptCookies.bind(this);
+    this.editAcceptButton.addEventListener('click', this.acceptance);
+  }
 
-      this.removeBanner(this.editScreen);
-      this.removeBanner(this.banner);
-      this.emit('onSave', this.accepted);
-      this.setAcceptanceCookie();
-      this.enableScroll();
-    });
+  acceptCookies() {
+    console.log(this.editAcceptButton);
+    const radioButtons = Array.from(
+      document.querySelectorAll('input[type="radio"]')
+    );
+    const accepted = radioButtons
+      .filter((radio) => {
+        if (radio.id === 'on' && radio.checked === true) {
+          return radio;
+        }
+      })
+      .map((r) => {
+        return r.name;
+      });
+    this.accepted = accepted;
+
+    this.editAcceptButton.removeEventListener('click', this.acceptance);
+    this.removeBanner(this.editScreen);
+    this.removeBanner(this.banner);
+    this.emit('onSave', this.accepted);
+    this.setAcceptanceCookie();
+    this.enableScroll();
   }
 
   /**
@@ -226,10 +261,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const c = new Crumbs();
 
   const cookieList = document.querySelector('.accepted-cookies');
-  const editCookiePreferences = document.querySelector('.edit-cookies');
 
   c.on('onSave', (preferences) => {
     cookieList.innerHTML = '';
+    console.log(preferences);
     preferences.forEach((preference) => {
       const li = document.createElement('li');
       li.textContent = preference;
