@@ -108,6 +108,7 @@ class Crumbs extends EventEmitter {
       this.editScreen.remove();
       this.setFocus(this.editSettingsButton);
       this.enableScroll();
+      this.editAcceptButton.removeEventListener('click', this.acceptCookies);
     }
   }
 
