@@ -39,10 +39,7 @@ class Crumbs extends EventEmitter {
 
       // Select our edit button, assign it to the constructor and pass
       // it to our editSettings method
-      const editSettingsButtons = document.querySelector(
-        '.crumbs-edit-settings'
-      );
-      this.editSettingsButton = editSettingsButtons;
+      this.editSettingsButton = document.querySelector('.crumbs-edit-settings');
       this.editSettings(this.editSettingsButton);
 
       // This sets up the editScreen component and adds it to memory for later use
@@ -172,7 +169,6 @@ class Crumbs extends EventEmitter {
   }
 
   acceptCookies() {
-    console.log(this.editAcceptButton);
     const radioButtons = Array.from(
       document.querySelectorAll('input[type="radio"]')
     );
