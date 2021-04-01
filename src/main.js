@@ -4,9 +4,10 @@ import { cookieBanner } from './components/cookieBanner';
 import './main.css';
 
 class Crumbs extends EventEmitter {
-  constructor() {
+  constructor({ editCookieButton }) {
     super();
     this.accepted = ['performance', 'functional', 'targeting'];
+    this.editCookieButton = editCookieButton;
     this.banner = null;
     this.editScreen = null;
     this.editSettingsButton = null;
@@ -49,7 +50,7 @@ class Crumbs extends EventEmitter {
       const elementToAdd = fragment.firstElementChild;
       this.editScreen = elementToAdd;
 
-      document.querySelector('.edit-cookies').addEventListener('click', () => {
+      this.editCookieButton.addEventListener('click', () => {
         // Getting all radio buttons and resetting them to false
         const radios = Array.from(
           this.editScreen.querySelectorAll('input[type="radio"]')
@@ -253,7 +254,9 @@ class Crumbs extends EventEmitter {
 /// NOTE: This is just an example of us consuming the class in a project
 ////////////////////////////////////////////////////////////////////////
 document.addEventListener('DOMContentLoaded', () => {
-  const c = new Crumbs();
+  const c = new Crumbs({
+    editCookieButton: document.querySelector('.edit-cookies'),
+  });
 
   const cookieList = document.querySelector('.accepted-cookies');
 
