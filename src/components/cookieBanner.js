@@ -5,8 +5,8 @@ export const cookieBanner = `
       <p class="crumbs-banner__description">This website uses cookies in order to provide you with the most relevant information.</p>
     </div>
     <div>
-      <button class="crumbs-edit-settings">Edit settings</button>
-      <button class="crumbs-accept-all">Accept Cookies</button>
+      <button class="crumbs-button crumbs-edit-settings">Edit settings</button>
+      <button class="crumbs-button crumbs-accept-all">Accept Cookies</button>
     </div>
   </div>
 `;
