@@ -47,6 +47,24 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 ```
 
+## Options
+
+There is currently one required option that you need to pass to the Crumbs constructor
+
+`editSettingsButton`: This is an HTMLElement that you want to attach an event listener too in order for the user to change the cookie settings
+
+**Example**
+
+```
+document.addEventListener('DOMContentLoaded', () => {
+
+  const cookies = new Crumbs({
+    editSettingsButtons: document.querySelector('.edit-cookies')
+  });
+
+});
+```
+
 ### Webpack Analyzer
 
 Possibly a bit overkill for this sort of project however when running the environment locally
