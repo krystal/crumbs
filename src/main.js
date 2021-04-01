@@ -3,7 +3,7 @@ import { editScreen } from './components/editScreen';
 import { cookieBanner } from './components/cookieBanner';
 import './main.css';
 
-class Crumbs extends EventEmitter {
+export default class Crumbs extends EventEmitter {
   constructor({ editCookieButton }) {
     super();
     this.accepted = ['performance', 'functional', 'targeting'];
