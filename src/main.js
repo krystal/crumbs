@@ -108,7 +108,7 @@ class Crumbs extends EventEmitter {
       this.editScreen.remove();
       this.setFocus(this.editSettingsButton);
       this.enableScroll();
-      this.editAcceptButton.removeEventListener('click', this.acceptCookies);
+      this.editAcceptButton.removeEventListener('click', this.acceptance);
     }
   }
 
@@ -145,7 +145,7 @@ class Crumbs extends EventEmitter {
       this.editScreen.remove();
       this.setFocus(this.editSettingsButton);
       this.enableScroll();
-      this.editAcceptButton.removeEventListener('click', this.acceptCookies);
+      this.editAcceptButton.removeEventListener('click', this.acceptance);
     });
   }
 
