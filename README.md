@@ -86,8 +86,3 @@ There are however some colours that you can override with some CSS custom proper
 ```
 
 What you see above is all the defaults that are provided by Crumbs.
-
-### Webpack Analyzer
-
-Possibly a bit overkill for this sort of project however when running the environment locally
-you will also get the webpack analyser spinning up locally at `http://127.0.0.1:8888/`
