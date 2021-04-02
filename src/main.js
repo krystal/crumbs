@@ -253,25 +253,3 @@ export default class Crumbs extends EventEmitter {
     document.cookie = `${name}=${value || ''}${maxAge}; path=/`;
   }
 }
-
-////////////////////////////////////////////////////////////////////////
-/// NOTE: This is just an example of us consuming the class in a project
-////////////////////////////////////////////////////////////////////////
-document.addEventListener('DOMContentLoaded', () => {
-  const c = new Crumbs({
-    editCookieButton: document.querySelector('.edit-cookies'),
-    days: 1,
-  });
-
-  const cookieList = document.querySelector('.accepted-cookies');
-
-  c.on('onSave', (preferences) => {
-    cookieList.innerHTML = '';
-    console.log(preferences);
-    preferences.forEach((preference) => {
-      const li = document.createElement('li');
-      li.textContent = preference;
-      cookieList.append(li);
-    });
-  });
-});
