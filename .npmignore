@@ -1,0 +1,6 @@
+/node_modules
+src/**/*
+.babelrc
+package.json
+package-lock.json
+webpack.config.js
