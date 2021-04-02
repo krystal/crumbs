@@ -54,5 +54,6 @@
     "moduleNameMapper": {
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
     }
-  }
+  },
+  "homepage": "https://github.com/krystal/crumbs#readme"
 }
