@@ -11,8 +11,17 @@
   "author": "Krystal",
   "license": "MIT",
   "keywords": [
-    "cookie consent"
+    "cookie consent",
+    "js",
+    "cookies"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krystal/crumbs"
+  },
+  "bugs": {
+    "url": "https://github.com/krystal/crumbs/issues"
+  },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
     "@babel/core": "^7.13.10",
