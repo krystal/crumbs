@@ -4,10 +4,11 @@ import { cookieBanner } from './components/cookieBanner';
 import './main.css';
 
 export default class Crumbs extends EventEmitter {
-  constructor({ editCookieButton }) {
+  constructor({ editCookieButton, days }) {
     super();
     this.accepted = ['performance', 'functional', 'targeting'];
     this.editCookieButton = editCookieButton;
+    this.days = days;
     this.banner = null;
     this.editScreen = null;
     this.editSettingsButton = null;
@@ -223,7 +224,7 @@ export default class Crumbs extends EventEmitter {
    */
   setAcceptanceCookie() {
     // I am setting this really low for testing purposes
-    this.setCookie('cookie_consent', true, 0.0001);
+    this.setCookie('cookie_consent', true, this.days);
   }
 
   /**
@@ -256,6 +257,7 @@ export default class Crumbs extends EventEmitter {
 document.addEventListener('DOMContentLoaded', () => {
   const c = new Crumbs({
     editCookieButton: document.querySelector('.edit-cookies'),
+    days: 1,
   });
 
   const cookieList = document.querySelector('.accepted-cookies');
