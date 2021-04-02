@@ -61,7 +61,8 @@ There is currently two required options that you need to pass to the Crumbs cons
 document.addEventListener('DOMContentLoaded', () => {
 
   const cookies = new Crumbs({
-    editSettingsButtons: document.querySelector('.edit-cookies')
+    editSettingsButtons: document.querySelector('.edit-cookies'),
+    days: 365
   });
 
 });

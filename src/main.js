@@ -65,6 +65,10 @@ export default class Crumbs extends EventEmitter {
     }
   }
 
+  /**
+   * Here we take the accepted array and automatically check these options when
+   * rebuilding the edit preferences dialog.
+   */
   buildEditScreen() {
     // Getting all radio buttons and resetting them to false
     const radios = Array.from(
