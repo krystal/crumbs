@@ -7,49 +7,49 @@ export const editScreen = `
         <div class="crumbs-edit__section">
           <div class="crumbs-edit__block">
             <h4>Functional</h4>
-            <p>These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages. If you do not allow these cookies then some or all of these services may not function properly.</p>
+            <p class="crumbs-edit__text">These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages. If you do not allow these cookies then some or all of these services may not function properly.</p>
           </div>
           <div class="crumbs-toggle">
-            <label for="off" class="crumbs__hidden">Off</label>
+            <label for="off" class="crumbs-toggle__label crumbs__hidden">Off</label>
             <span class="crumbs-toggle__wrapper">
-              <input type="radio" name="functional" id="off" checked>
-              <input type="radio" name="functional" id="on">
+              <input class="crumbs-toggle__radio" type="radio" name="functional" id="off" checked>
+              <input class="crumbs-toggle__radio crumbs-toggle__radio--on" type="radio" name="functional" id="on">
               <span aria-hidden="true" class="crumbs-toggle__background"></span>
               <span aria-hidden="true" class="crumbs-toggle__switcher"></span>
             </span>
-            <label for="on" class="crumbs__hidden">On</label>
+            <label for="on" class="crumbs-toggle__label crumbs__hidden">On</label>
           </div>
         </div>
         <div class="crumbs-edit__section">
           <div class="crumbs-edit__block">
             <h4>Performance</h4>
-            <p>These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us to know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies we will not know when you have visited our site, and will not be able to monitor its performance.</p>
+            <p class="crumbs-edit__text">These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our site. They help us to know which pages are the most and least popular and see how visitors move around the site. All information these cookies collect is aggregated and therefore anonymous. If you do not allow these cookies we will not know when you have visited our site, and will not be able to monitor its performance.</p>
           </div>
           <div class="crumbs-toggle">
-            <label for="off" class="crumbs__hidden">Off</label>
+            <label for="off" class="crumbs-toggle__label crumbs__hidden">Off</label>
             <span class="crumbs-toggle__wrapper">
-              <input type="radio" name="performance" id="off" checked>
-              <input type="radio" name="performance" id="on">
+              <input class="crumbs-toggle__radio" type="radio" name="performance" id="off" checked>
+              <input class="crumbs-toggle__radio crumbs-toggle__radio--on" type="radio" name="performance" id="on">
               <span aria-hidden="true" class="crumbs-toggle__background"></span>
               <span aria-hidden="true" class="crumbs-toggle__switcher"></span>
             </span>
-            <label for="on" class="crumbs__hidden">On</label>
+            <label for="on" class="crumbs-toggle__label crumbs__hidden">On</label>
           </div>
         </div>
         <div class="crumbs-edit__section">
           <div class="crumbs-edit__block">
             <h4>Targeting</h4>
-            <p>These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and internet device. If you do not allow these cookies, you will experience less targeted advertising.</p>
+            <p class="crumbs-edit__text">These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and internet device. If you do not allow these cookies, you will experience less targeted advertising.</p>
           </div>
           <div class="crumbs-toggle">
-            <label for="off" class="crumbs__hidden">Off</label>
+            <label for="off" class="crumbs-toggle__label crumbs__hidden">Off</label>
             <span class="crumbs-toggle__wrapper">
-              <input type="radio" name="targeting" id="off" checked>
-              <input type="radio" name="targeting" id="on">
+              <input class="crumbs-toggle__radio" type="radio" name="targeting" id="off" checked>
+              <input class="crumbs-toggle__radio crumbs-toggle__radio--on" type="radio" name="targeting" id="on">
               <span aria-hidden="true" class="crumbs-toggle__background"></span>
               <span aria-hidden="true" class="crumbs-toggle__switcher"></span>
             </span>
-            <label for="on" class="crumbs__hidden">On</label>
+            <label for="on" class="crumbs-toggle__label crumbs__hidden">On</label>
           </div>
         </div>
       </div>

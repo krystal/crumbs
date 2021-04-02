@@ -1,37 +1,25 @@
-button {
-  appearance: none;
-  background-color: whitesmoke;
-  box-shadow: none;
-  border: 1px solid gainsboro;
-  border-radius: 4px;
-  cursor: pointer;
-  font: inherit;
-  padding: 1rem;
-  max-width: 250px;
+:root {
+  --edit-crumbs-bg: #f4f4f4;
+  --edit-crumbs-overlay: rgba(0, 0, 0, 0.4);
+  --edit-crumbs-cta-bg: gainsboro;
+  --crumbs-toggle-switch-bg: #858585;
+  --crumbs-toggle-checked-bg: #e0e0e0;
+  --crumbs-toggle-border-color: #dddddd;
+  --crumbs-toggle-switch-border-color: #a8a8a8;
 }
 
 .crumbs-banner {
-  background-color: #fafafa;
-  border-top: 1px solid #cacaca;
   bottom: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   left: 0;
-  padding: 2rem;
   position: fixed;
   width: 100%;
 }
 
-.crumbs-banner button {
-  color: #333;
-  margin-top: 12px;
-  padding: 0.8rem 1rem;
-  text-decoration: none;
-}
-
 .crumbs-edit {
-  background-color: #f4f4f4;
+  background-color: var(--edit-crumbs-bg);
   border-radius: 8px;
   left: 50%;
   max-width: 700px;
@@ -43,7 +31,7 @@ button {
 }
 
 .crumbs-overlay::before {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: var(--edit-crumbs-overlay);
   content: '';
   top: 0;
   left: 0;
@@ -62,8 +50,6 @@ button {
 }
 
 .crumbs-edit__section {
-  border: 1px solid #d0d4d5;
-  border-radius: 4px;
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
@@ -92,12 +78,12 @@ button {
   overflow: auto;
 }
 
-.crumbs-edit__block p {
+.crumbs-edit__text {
   font-size: 14px;
 }
 
 .crumbs-edit__cta {
-  background-color: gainsboro;
+  background-color: var(--edit-crumbs-cta-bg);
   bottom: 0;
   left: 0;
   padding: 12px 0;
@@ -115,13 +101,13 @@ button {
   margin-top: 8px;
 }
 
-.crumbs-toggle label {
+.crumbs-toggle__label {
   font-size: 12px;
   margin: 0 0.5em 0;
   cursor: pointer;
 }
 
-.crumbs-toggle input[type='radio'] {
+.crumbs-toggle__radio {
   display: inline-block;
   margin-right: -2px;
   width: 50%;
@@ -132,8 +118,8 @@ button {
   cursor: pointer;
 }
 
-.crumbs-toggle input[type='radio']:focus ~ .crumbs-toggle__switcher {
-  border: 3px solid #a8a8a8;
+.crumbs-toggle__radio:focus ~ .crumbs-toggle__switcher {
+  border: 3px solid var(--crumbs-toggle-switch-border-color);
   top: 0px;
 }
 
@@ -144,7 +130,7 @@ button {
   width: 60px;
   height: 30px;
   border-radius: 30px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--crumbs-toggle-border-color);
   position: relative;
 }
 
@@ -157,7 +143,7 @@ button {
   width: 50%;
   height: 100%;
   border-radius: 50%;
-  background-color: #858585;
+  background-color: var(--crumbs-toggle-switch-bg);
   transition: all 0.1s ease-out;
   z-index: 2;
 }
@@ -183,13 +169,13 @@ button {
   overflow: hidden;
 }
 
-#on:checked ~ .crumbs-toggle__switcher {
+.crumbs-toggle__radio--on:checked ~ .crumbs-toggle__switcher {
   right: 0px;
   left: 48%;
 }
 
-#on:checked ~ .crumbs-toggle__background {
-  background-color: #e0e0e0;
+.crumbs-toggle__radio--on:checked ~ .crumbs-toggle__background {
+  background-color: var(--crumbs-toggle-checked-bg);
 }
 
 @media screen and (min-width: 900px) {
