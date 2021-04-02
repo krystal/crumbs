@@ -65,6 +65,26 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 ```
 
+### Styling
+
+Most of the styling is left to the project you are using Crumbs in expect a the main positioning of elements. For example, the banner being stuck to the bottom of the page and the edit preferences dialog being in the middle of the screen.
+
+There are however some colours that you can override with some CSS custom properties. These are as follows:
+
+```
+:root {
+  --edit-crumbs-bg: #f4f4f4;
+  --edit-crumbs-overlay: rgba(0, 0, 0, 0.4);
+  --edit-crumbs-cta-bg: gainsboro;
+  --crumbs-toggle-switch-bg: #858585;
+  --crumbs-toggle-checked-bg: #e0e0e0;
+  --crumbs-toggle-border-color: #dddddd;
+  --crumbs-toggle-switch-border-color: #a8a8a8;
+}
+```
+
+What you see above is all the defaults that are provided by Crumbs.
+
 ### Webpack Analyzer
 
 Possibly a bit overkill for this sort of project however when running the environment locally
