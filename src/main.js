@@ -52,27 +52,7 @@ export default class Crumbs extends EventEmitter {
       this.editScreen = elementToAdd;
 
       this.editCookieButton.addEventListener('click', () => {
-        // Getting all radio buttons and resetting them to false
-        const radios = Array.from(
-          this.editScreen.querySelectorAll('input[type="radio"]')
-        );
-        radios.forEach((radio) => {
-          radio.checked = false;
-        });
-
-        // Filtering out the 'on' radios that are in the accepted array
-        radios
-          .filter((radio) => {
-            if (this.accepted.includes(radio.name) && radio.id === 'on')
-              return radio;
-          })
-          .map((r) => {
-            const radioToCheck = this.editScreen.querySelector(
-              `#${r.id}[name=${r.name}]`
-            );
-            radioToCheck.checked = true;
-          });
-
+        this.buildEditScreen();
         document.body.insertAdjacentElement('beforeend', this.editScreen);
 
         this.editAccept();
@@ -83,6 +63,29 @@ export default class Crumbs extends EventEmitter {
         this.setCloseOnEscape();
       });
     }
+  }
+
+  buildEditScreen() {
+    // Getting all radio buttons and resetting them to false
+    const radios = Array.from(
+      this.editScreen.querySelectorAll('input[type="radio"]')
+    );
+    radios.forEach((radio) => {
+      radio.checked = false;
+    });
+
+    // Filtering out the 'on' radios that are in the accepted array
+    radios
+      .filter((radio) => {
+        if (this.accepted.includes(radio.name) && radio.id === 'on')
+          return radio;
+      })
+      .map((r) => {
+        const radioToCheck = this.editScreen.querySelector(
+          `#${r.id}[name=${r.name}]`
+        );
+        radioToCheck.checked = true;
+      });
   }
 
   /**
