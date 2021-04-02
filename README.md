@@ -49,9 +49,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## Options
 
-There is currently one required option that you need to pass to the Crumbs constructor
+There is currently two required options that you need to pass to the Crumbs constructor
 
 `editSettingsButton`: This is an HTMLElement that you want to attach an event listener too in order for the user to change the cookie settings
+
+`days`: The duration of the cookie that is set on acceptance
 
 **Example**
 
