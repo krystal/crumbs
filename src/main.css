@@ -127,9 +127,9 @@
   font-size: 10px;
   display: inline-block;
   vertical-align: middle;
-  width: 60px;
-  height: 30px;
-  border-radius: 30px;
+  width: 75px;
+  height: 40px;
+  border-radius: 40px;
   border: 1px solid var(--crumbs-toggle-border-color);
   position: relative;
 }
@@ -137,14 +137,14 @@
 .crumbs-toggle__switcher {
   display: block;
   position: absolute;
-  top: 0;
-  left: 1px;
+  top: 3px;
+  left: 3px;
   right: 100%;
-  width: 50%;
-  height: 100%;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background-color: var(--crumbs-toggle-switch-bg);
-  transition: all 0.1s ease-out;
+  transition: all 0.2s ease-out;
   z-index: 2;
 }
 
@@ -171,7 +171,7 @@
 
 .crumbs-toggle__radio--on:checked ~ .crumbs-toggle__switcher {
   right: 0px;
-  left: 48%;
+  left: 52%;
 }
 
 .crumbs-toggle__radio--on:checked ~ .crumbs-toggle__background {

@@ -257,3 +257,8 @@ export default class Crumbs extends EventEmitter {
     document.cookie = `${name}=${value || ''}${maxAge}; path=/`;
   }
 }
+const editCookies = document.querySelector('.edit-cookies');
+export const CookieBanner = new Crumbs({
+  editCookieButton: editCookies,
+  days: 365,
+});
