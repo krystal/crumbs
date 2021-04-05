@@ -43,26 +43,26 @@ export default class Crumbs extends EventEmitter {
       // it to our editSettings method
       this.editSettingsButton = document.querySelector('.crumbs-edit-settings');
       this.editSettings(this.editSettingsButton);
-
-      // This sets up the editScreen component and adds it to memory for later use
-      const fragment = document
-        .createRange()
-        .createContextualFragment(editScreen);
-      const elementToAdd = fragment.firstElementChild;
-      this.editScreen = elementToAdd;
-
-      this.editCookieButton.addEventListener('click', () => {
-        this.buildEditScreen();
-        document.body.insertAdjacentElement('beforeend', this.editScreen);
-
-        this.editAccept();
-        this.closeEditScreen();
-
-        this.setFocus(this.editScreen);
-        this.disableScroll();
-        this.setCloseOnEscape();
-      });
     }
+
+    // This sets up the editScreen component and adds it to memory for later use
+    const fragment = document
+      .createRange()
+      .createContextualFragment(editScreen);
+    const elementToAdd = fragment.firstElementChild;
+    this.editScreen = elementToAdd;
+
+    this.editCookieButton.addEventListener('click', () => {
+      this.buildEditScreen();
+      document.body.insertAdjacentElement('beforeend', this.editScreen);
+
+      this.editAccept();
+      this.closeEditScreen();
+
+      this.setFocus(this.editScreen);
+      this.disableScroll();
+      this.setCloseOnEscape();
+    });
   }
 
   /**
@@ -114,8 +114,10 @@ export default class Crumbs extends EventEmitter {
    */
   closeOnEscape(event) {
     if (event.key === 'Escape') {
+      if (this.editSettingsButton) {
+        this.setFocus(this.editSettingsButton);
+      }
       this.editScreen.remove();
-      this.setFocus(this.editSettingsButton);
       this.enableScroll();
       this.editAcceptButton.removeEventListener('click', this.acceptance);
     }
@@ -151,8 +153,10 @@ export default class Crumbs extends EventEmitter {
   closeEditScreen() {
     const editClose = this.editScreen.querySelector('.crumbs-edit-close');
     editClose.addEventListener('click', () => {
+      if (this.editSettingsButton) {
+        this.setFocus(this.editSettingsButton);
+      }
       this.editScreen.remove();
-      this.setFocus(this.editSettingsButton);
       this.enableScroll();
       this.editAcceptButton.removeEventListener('click', this.acceptance);
     });
@@ -195,7 +199,9 @@ export default class Crumbs extends EventEmitter {
 
     this.editAcceptButton.removeEventListener('click', this.acceptance);
     this.removeBanner(this.editScreen);
-    this.removeBanner(this.banner);
+    if (this.banner) {
+      this.removeBanner(this.banner);
+    }
     this.emit('onSave', this.accepted);
     this.setAcceptanceCookie();
     this.enableScroll();
@@ -230,7 +236,6 @@ export default class Crumbs extends EventEmitter {
    * Set the cookie_consent cookie that determines whether the banner is shown or not
    */
   setAcceptanceCookie() {
-    // I am setting this really low for testing purposes
     this.setCookie('cookie_consent', true, this.days);
   }
 
@@ -257,3 +262,11 @@ export default class Crumbs extends EventEmitter {
     document.cookie = `${name}=${value || ''}${maxAge}; path=/`;
   }
 }
+const editCookies = document.querySelector('.edit-cookies');
+const CookieBanner = new Crumbs({
+  editCookieButton: editCookies,
+  days: 365,
+});
+CookieBanner.on('onSave', (preferences) => {
+  console.log(preferences);
+});
