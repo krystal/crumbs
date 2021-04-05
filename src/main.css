@@ -22,7 +22,7 @@
   background-color: var(--edit-crumbs-bg);
   border-radius: 8px;
   left: 50%;
-  max-width: 700px;
+  max-width: 600px;
   position: fixed;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -50,6 +50,7 @@
 }
 
 .crumbs-edit__section {
+  align-items: center;
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
@@ -61,7 +62,7 @@
 }
 
 .crumbs-edit__container {
-  padding: 20px 20px 100px 20px;
+  padding: 16px 16px 100px 16px;
 }
 
 .crumbs-edit__block {
@@ -119,7 +120,7 @@
 }
 
 .crumbs-toggle__radio:focus ~ .crumbs-toggle__switcher {
-  border: 2px solid var(--crumbs-toggle-switch-focus-border-color);
+  border: 1px solid var(--crumbs-toggle-switch-focus-border-color);
   top: 3px;
 }
 
@@ -137,11 +138,11 @@
 .crumbs-toggle__switcher {
   display: block;
   position: absolute;
-  top: 3px;
-  left: 3px;
+  top: 2px;
+  left: 2px;
   right: 100%;
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   background-color: var(--crumbs-toggle-switch-bg);
   transition: all 0.2s ease-out;
@@ -185,23 +186,37 @@
   }
 
   .crumbs-banner__content {
-    flex: 0 1 60%;
+    flex: 0 1 45%;
   }
 
   .crumbs-edit__container {
     padding: 40px 40px 100px 40px;
   }
 
-  .crumbs-edit__section {
-    align-items: center;
-  }
-
   .crumbs-banner button {
-    margin: 0 8px;
+    margin: 0 4px;
   }
 
   .crumbs-edit-close {
     right: 16px;
     top: 16px;
+  }
+
+  .crumbs-toggle__wrapper {
+    height: 40px;
+    width: 75px;
+  }
+
+  .crumbs-toggle__switcher {
+    height: 32px;
+    left: 3px;
+    top: 3px;
+    width: 32px;
+  }
+}
+
+@media screen and (min-width: 1100px) {
+  .crumbs-banner__content {
+    flex: 0 1 55%;
   }
 }

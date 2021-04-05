@@ -5,7 +5,7 @@ export const cookieBanner = `
       <p class="crumbs-banner__description">By clicking “Accept all cookies”, you agree to the storing of cookies on your device to enhance site navigation, analyse site usage, and assist in our marketing efforts. <a href="/privacy">Cookie Policy</a></p>
     </div>
     <div>
-      <button class="crumbs-button crumbs-edit-settings">Edit settings</button>
+      <button class="crumbs-button crumbs-edit-settings">Choose cookies</button>
       <button class="crumbs-button crumbs-accept-all">Accept all cookies</button>
     </div>
   </div>
