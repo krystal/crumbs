@@ -55,6 +55,8 @@ There is currently two required options that you need to pass to the Crumbs cons
 
 `days`: The duration of the cookie that is set on acceptance
 
+You can also specify the types of cookies your site set by specifying an Array as part of the `types` property. E.g. if your site only potentially uses functional cookies then you would pass `types: ['functional']` to Crumbs. The default of the types Array is `['functional', 'performance', 'targeting']`.
+
 **Example**
 
 ```
@@ -62,7 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const cookies = new Crumbs({
     editSettingsButtons: document.querySelector('.edit-cookies'),
-    days: 365
+    days: 365,
+    types: ['functional', 'performance'] // If you only set functional or performance cookies
   });
 
 });
