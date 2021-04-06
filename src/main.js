@@ -1,19 +1,30 @@
 import { EventEmitter } from 'events';
+import { functional } from './components/functional';
+import { performance } from './components/performance';
+import { targeting } from './components/targeting';
 import { editScreen } from './components/editScreen';
 import { cookieBanner } from './components/cookieBanner';
 import './main.css';
 
 export default class Crumbs extends EventEmitter {
-  constructor({ editCookieButton, days }) {
+  constructor({
+    editCookieButton,
+    days,
+    types = ['functional', 'performance', 'targeting'],
+  }) {
     super();
-    this.accepted = ['performance', 'functional', 'targeting'];
-    this.editCookieButton = editCookieButton;
-    this.days = days;
+    this.acceptance = null;
+    this.accepted = ['functional', 'performance', 'targeting'].filter(
+      (cookie) => {
+        return types.includes(cookie);
+      }
+    );
     this.banner = null;
+    this.days = days;
+    this.editAcceptButton = null;
+    this.editCookieButton = editCookieButton;
     this.editScreen = null;
     this.editSettingsButton = null;
-    this.editAcceptButton = null;
-    this.acceptance = null;
     this.render();
   }
 
@@ -51,6 +62,9 @@ export default class Crumbs extends EventEmitter {
       .createContextualFragment(editScreen);
     const elementToAdd = fragment.firstElementChild;
     this.editScreen = elementToAdd;
+
+    // Add the relevant preferences that have been specified by the types Array
+    this.addPreferences();
 
     this.editCookieButton.addEventListener('click', () => {
       this.buildEditScreen();
@@ -169,6 +183,21 @@ export default class Crumbs extends EventEmitter {
     this.setFocus(this.editScreen);
     this.disableScroll();
     this.setCloseOnEscape();
+  }
+
+  addPreferences() {
+    const cookieTypeWrapper = this.editScreen.querySelector(
+      '#cookie-categories'
+    );
+    if (this.accepted.includes('functional')) {
+      cookieTypeWrapper.insertAdjacentHTML('beforeend', functional);
+    }
+    if (this.accepted.includes('performance')) {
+      cookieTypeWrapper.insertAdjacentHTML('beforeend', performance);
+    }
+    if (this.accepted.includes('targeting')) {
+      cookieTypeWrapper.insertAdjacentHTML('beforeend', targeting);
+    }
   }
 
   /**
