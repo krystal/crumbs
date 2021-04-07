@@ -14,11 +14,7 @@ export default class Crumbs extends EventEmitter {
   }) {
     super();
     this.acceptance = null;
-    this.accepted = ['functional', 'performance', 'targeting'].filter(
-      (cookie) => {
-        return types.includes(cookie);
-      }
-    );
+    this.accepted = null;
     this.banner = null;
     this.days = days;
     this.editAcceptButton = null;
@@ -45,9 +41,13 @@ export default class Crumbs extends EventEmitter {
       // Clicking on accept all sets all the cookies and hides the banner
       const acceptCookies = document.querySelector('.crumbs-accept-all');
       acceptCookies.addEventListener('click', () => {
-        // As we are accepting all, we can send back everything
+        // As we are accepting all, we can send back everything that the
+        // consumer provided via the 'types' property
+        this.accepted = this.types;
+
         this.setAcceptanceCookie();
         this.removeBanner(this.banner);
+
         this.emit('onSave', this.accepted);
       });
 
@@ -93,7 +93,7 @@ export default class Crumbs extends EventEmitter {
       checkbox.checked = false;
     });
 
-    // Filtering out the 'on' radios that are in the accepted array
+    // Filter out the checkboxes that have been checked
     checkboxes
       .filter((checkbox) => {
         if (this.accepted.includes(checkbox.name)) return checkbox;
@@ -185,17 +185,21 @@ export default class Crumbs extends EventEmitter {
     this.setCloseOnEscape();
   }
 
+  /**
+   * This will attach the relevant components to the edit screen depending on what was provided via
+   * the 'types' property
+   */
   addPreferences() {
     const cookieTypeWrapper = this.editScreen.querySelector(
       '#cookie-categories'
     );
-    if (this.accepted.includes('functional')) {
+    if (this.types.includes('functional')) {
       cookieTypeWrapper.insertAdjacentHTML('beforeend', functional);
     }
-    if (this.accepted.includes('performance')) {
+    if (this.types.includes('performance')) {
       cookieTypeWrapper.insertAdjacentHTML('beforeend', performance);
     }
-    if (this.accepted.includes('targeting')) {
+    if (this.types.includes('targeting')) {
       cookieTypeWrapper.insertAdjacentHTML('beforeend', targeting);
     }
   }
@@ -211,6 +215,10 @@ export default class Crumbs extends EventEmitter {
     this.editAcceptButton.addEventListener('click', this.acceptance);
   }
 
+  /**
+   * If the user decides to edit their cookie settings, this will determine which categories
+   * need to be set by checking which checkboxes were activated.
+   */
   acceptCookies() {
     const checkboxes = Array.from(
       document.querySelectorAll('input[type="checkbox"]')
@@ -293,7 +301,7 @@ export default class Crumbs extends EventEmitter {
       return this.accepted.includes(cookie);
     });
 
-    let value = ['v1', ...setCookieBoolean].join('|');
+    const value = ['v1', ...setCookieBoolean].join('|');
     document.cookie = `${name}=${value || ''}${maxAge}; path=/`;
   }
 }
