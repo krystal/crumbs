@@ -232,7 +232,6 @@ export default class Crumbs extends EventEmitter {
       this.removeBanner(this.banner);
     }
     this.emit('onSave', this.accepted);
-    console.log(this.accepted);
     if (this.accepted.length !== 0) {
       this.setAcceptanceCookie();
     } else {

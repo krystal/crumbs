@@ -1,6 +1,6 @@
 {
   "name": "krystal-crumbs",
-  "version": "0.0.14",
+  "version": "0.0.17",
   "description": "A cookie consent plugin",
   "main": "./dist/main.js",
   "scripts": {
