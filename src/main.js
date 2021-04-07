@@ -232,7 +232,13 @@ export default class Crumbs extends EventEmitter {
       this.removeBanner(this.banner);
     }
     this.emit('onSave', this.accepted);
-    this.setAcceptanceCookie();
+    console.log(this.accepted);
+    if (this.accepted.length !== 0) {
+      this.setAcceptanceCookie();
+    } else {
+      this.setRejectionCookie();
+    }
+
     this.enableScroll();
   }
 
@@ -265,7 +271,14 @@ export default class Crumbs extends EventEmitter {
    * Set the cookie_consent cookie that determines whether the banner is shown or not
    */
   setAcceptanceCookie() {
-    this.setCookie('cookie_consent', true, this.days);
+    this.setCookie('cookie_consent', 'true', this.days);
+  }
+
+  /**
+   * Set the cookie_consent cookie to false
+   */
+  setRejectionCookie() {
+    this.setCookie('cookie_consent', 'false', this.days);
   }
 
   /**
