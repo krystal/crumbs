@@ -25,6 +25,7 @@ export default class Crumbs extends EventEmitter {
     this.editCookieButton = editCookieButton;
     this.editScreen = null;
     this.editSettingsButton = null;
+    this.types = types;
     this.render();
   }
 
@@ -232,11 +233,7 @@ export default class Crumbs extends EventEmitter {
       this.removeBanner(this.banner);
     }
     this.emit('onSave', this.accepted);
-    if (this.accepted.length !== 0) {
-      this.setAcceptanceCookie();
-    } else {
-      this.setRejectionCookie();
-    }
+    this.setAcceptanceCookie();
 
     this.enableScroll();
   }
@@ -270,14 +267,7 @@ export default class Crumbs extends EventEmitter {
    * Set the cookie_consent cookie that determines whether the banner is shown or not
    */
   setAcceptanceCookie() {
-    this.setCookie('cookie_consent', 'true', this.days);
-  }
-
-  /**
-   * Set the cookie_consent cookie to false
-   */
-  setRejectionCookie() {
-    this.setCookie('cookie_consent', 'false', this.days);
+    this.setCookie('cookie_consent', this.days);
   }
 
   /**
@@ -294,12 +284,24 @@ export default class Crumbs extends EventEmitter {
    * @param  {String} value The value to assign the cookie
    * @param  {Number} days The number of days the cookie should be set for before expiring (max-age)
    */
-  setCookie(name, value, days) {
+  setCookie(name, days) {
     let maxAge = '';
     if (days) {
       const time = 86400 * days;
       maxAge = `; max-age=${time}`;
     }
+
+    const setCookieBoolean = this.types.map((cookie) => {
+      return this.accepted.includes(cookie);
+    });
+
+    let value = ['v1', ...setCookieBoolean].join('|');
     document.cookie = `${name}=${value || ''}${maxAge}; path=/`;
   }
 }
+const editCookies = document.querySelector('.edit-cookies');
+const CookieBanner = new Crumbs({
+  editCookieButton: editCookies,
+  days: 365,
+  types: ['functional', 'performance', 'targeting'],
+});
