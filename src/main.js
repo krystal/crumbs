@@ -68,7 +68,6 @@ export default class Crumbs extends EventEmitter {
     this.addPreferences();
 
     this.editCookieButton.addEventListener('click', () => {
-      this.buildEditScreen();
       document.body.insertAdjacentElement('beforeend', this.editScreen);
 
       this.editAccept();
@@ -78,32 +77,6 @@ export default class Crumbs extends EventEmitter {
       this.disableScroll();
       this.setCloseOnEscape();
     });
-  }
-
-  /**
-   * Here we take the accepted array and automatically check these options when
-   * rebuilding the edit preferences dialog.
-   */
-  buildEditScreen() {
-    // Getting all radio buttons and resetting them to false
-    const checkboxes = Array.from(
-      this.editScreen.querySelectorAll('input[type="checkbox"]')
-    );
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
-
-    // Filter out the checkboxes that have been checked
-    checkboxes
-      .filter((checkbox) => {
-        if (this.accepted.includes(checkbox.name)) return checkbox;
-      })
-      .map((c) => {
-        const checkboxToCheck = this.editScreen.querySelector(
-          `#${c.id}[name=${c.name}]`
-        );
-        checkboxToCheck.checked = true;
-      });
   }
 
   /**
@@ -305,3 +278,12 @@ export default class Crumbs extends EventEmitter {
     document.cookie = `${name}=${value || ''}${maxAge}; path=/`;
   }
 }
+const editCookies = document.querySelector('.edit-cookies');
+const CookieBanner = new Crumbs({
+  editCookieButton: editCookies,
+  days: 365,
+  types: ['functional', 'performance', 'targeting'],
+});
+CookieBanner.on('onSave', (preferences) => {
+  console.log(preferences);
+});
