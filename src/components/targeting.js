@@ -5,14 +5,8 @@ export const targeting = `
     <p class="crumbs-edit__text">These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and internet device. If you do not allow these cookies, you will experience less targeted advertising.</p>
   </div>
   <div class="crumbs-toggle">
-    <label for="off" class="crumbs-toggle__label crumbs__hidden">Off</label>
-    <span class="crumbs-toggle__wrapper">
-      <input class="crumbs-toggle__radio" type="radio" name="targeting" id="off" checked>
-      <input class="crumbs-toggle__radio crumbs-toggle__radio--on" type="radio" name="targeting" id="on">
-      <span aria-hidden="true" class="crumbs-toggle__background"></span>
-      <span aria-hidden="true" class="crumbs-toggle__switcher"></span>
-    </span>
-    <label for="on" class="crumbs-toggle__label crumbs__hidden">On</label>
+    <input type="checkbox" name="targeting" id="targeting" class="crumbs-checkbox" />
+    <label for="targeting" class="crumbs-toggle__checkbox">Targeting</label>
   </div>
 </div>
 `;

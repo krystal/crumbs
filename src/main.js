@@ -86,24 +86,23 @@ export default class Crumbs extends EventEmitter {
    */
   buildEditScreen() {
     // Getting all radio buttons and resetting them to false
-    const radios = Array.from(
-      this.editScreen.querySelectorAll('input[type="radio"]')
+    const checkboxes = Array.from(
+      this.editScreen.querySelectorAll('input[type="checkbox"]')
     );
-    radios.forEach((radio) => {
-      radio.checked = false;
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
     });
 
     // Filtering out the 'on' radios that are in the accepted array
-    radios
-      .filter((radio) => {
-        if (this.accepted.includes(radio.name) && radio.id === 'on')
-          return radio;
+    checkboxes
+      .filter((checkbox) => {
+        if (this.accepted.includes(checkbox.name)) return checkbox;
       })
-      .map((r) => {
-        const radioToCheck = this.editScreen.querySelector(
-          `#${r.id}[name=${r.name}]`
+      .map((c) => {
+        const checkboxToCheck = this.editScreen.querySelector(
+          `#${c.id}[name=${c.name}]`
         );
-        radioToCheck.checked = true;
+        checkboxToCheck.checked = true;
       });
   }
 
@@ -213,17 +212,17 @@ export default class Crumbs extends EventEmitter {
   }
 
   acceptCookies() {
-    const radioButtons = Array.from(
-      document.querySelectorAll('input[type="radio"]')
+    const checkboxes = Array.from(
+      document.querySelectorAll('input[type="checkbox"]')
     );
-    const accepted = radioButtons
-      .filter((radio) => {
-        if (radio.id === 'on' && radio.checked === true) {
-          return radio;
+    const accepted = checkboxes
+      .filter((checkbox) => {
+        if (checkbox.checked === true) {
+          return checkbox;
         }
       })
-      .map((r) => {
-        return r.name;
+      .map((c) => {
+        return c.name;
       });
     this.accepted = accepted;
 
@@ -281,7 +280,6 @@ export default class Crumbs extends EventEmitter {
   /**
    * Set a cookie for a certain amount of time
    * @param  {String} name The name of the cookie
-   * @param  {String} value The value to assign the cookie
    * @param  {Number} days The number of days the cookie should be set for before expiring (max-age)
    */
   setCookie(name, days) {
@@ -299,9 +297,3 @@ export default class Crumbs extends EventEmitter {
     document.cookie = `${name}=${value || ''}${maxAge}; path=/`;
   }
 }
-const editCookies = document.querySelector('.edit-cookies');
-const CookieBanner = new Crumbs({
-  editCookieButton: editCookies,
-  days: 365,
-  types: ['functional', 'performance', 'targeting'],
-});
