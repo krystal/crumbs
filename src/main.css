@@ -63,7 +63,7 @@
 }
 
 .crumbs-edit__container {
-  padding: 16px 16px 100px 16px;
+  padding: 16px 16px 60px 16px;
 }
 
 .crumbs-edit__block {
@@ -75,9 +75,10 @@
 }
 
 .crumbs-edit__content {
-  position: static;
-  max-height: 600px;
+  height: calc(100vh - 140px);
+  max-height: 550px;
   overflow: auto;
+  position: static;
 }
 
 .crumbs-edit__text {
@@ -191,7 +192,7 @@
   }
 
   .crumbs-edit__container {
-    padding: 40px 40px 100px 40px;
+    padding: 40px 40px 60px 40px;
   }
 
   .crumbs-banner button {
