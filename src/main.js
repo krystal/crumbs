@@ -1,21 +1,15 @@
 import { EventEmitter } from 'events';
-import { functional } from './components/functional';
-import { performance } from './components/performance';
-import { targeting } from './components/targeting';
 import { editScreen } from './components/editScreen';
 import { cookieBanner } from './components/cookieBanner';
 import './main.css';
 
 export default class Crumbs extends EventEmitter {
-  constructor({
-    editCookieButton,
-    days,
-    types = ['functional', 'performance', 'targeting'],
-  }) {
+  constructor({ cookieName, editCookieButton, days, types }) {
     super();
     this.acceptance = null;
     this.accepted = null;
     this.banner = null;
+    this.cookieName = cookieName || 'cookie_consent';
     this.days = days;
     this.editAcceptButton = null;
     this.editCookieButton = editCookieButton;
@@ -30,7 +24,7 @@ export default class Crumbs extends EventEmitter {
    */
   render() {
     // Render the Cookie banner if the cookie_consent cookie isn't true
-    if (!this.getCookie('cookie_consent')) {
+    if (!this.getCookie(this.cookieName)) {
       // Create the banner itself as a template literal and add it
       // to the DOM, at the end of the body
       document.body.insertAdjacentHTML('beforeend', cookieBanner);
@@ -43,7 +37,7 @@ export default class Crumbs extends EventEmitter {
       acceptCookies.addEventListener('click', () => {
         // As we are accepting all, we can send back everything that the
         // consumer provided via the 'types' property
-        this.accepted = this.types;
+        this.accepted = this.getCookieTypes(this.types);
 
         this.setAcceptanceCookie();
         this.removeBanner(this.banner);
@@ -85,6 +79,18 @@ export default class Crumbs extends EventEmitter {
   editSettings(editHandler) {
     // Add the edit cookies modal to the DOM when selected
     editHandler.addEventListener('click', this.showSettings.bind(this));
+  }
+
+  /**
+   *
+   * @param {Array} types An array containing a number of objects that define the types of cookie categories we wish to potentially set
+   * @returns {String[]} An array of string identifiers
+   */
+  getCookieTypes(types) {
+    const cookies = types.map((type) => {
+      return type.identifier;
+    });
+    return cookies;
   }
 
   /**
@@ -166,15 +172,45 @@ export default class Crumbs extends EventEmitter {
     const cookieTypeWrapper = this.editScreen.querySelector(
       '#cookie-categories'
     );
-    if (this.types.includes('functional')) {
-      cookieTypeWrapper.insertAdjacentHTML('beforeend', functional);
+    if (!this.types) {
+      return;
     }
-    if (this.types.includes('performance')) {
-      cookieTypeWrapper.insertAdjacentHTML('beforeend', performance);
-    }
-    if (this.types.includes('targeting')) {
-      cookieTypeWrapper.insertAdjacentHTML('beforeend', targeting);
-    }
+
+    this.types.map((type) => {
+      const { title, summary, identifier } = type;
+
+      const el = this.createTemplate(title, summary, identifier);
+      cookieTypeWrapper.insertAdjacentHTML('beforeend', el);
+    });
+  }
+
+  /**
+   * Creates the necessary HTML for the creation of the edit screen
+   * @param {String} title The title of the cookie section
+   * @param {String} summary The summary of the cookie category that is being set
+   * @param {String} identifier An identifier which is used to assign a unique name to the checkbox
+   * @returns {HTMLElement}
+   */
+  createTemplate(title, summary, identifier) {
+    return `<div class="crumbs-edit__section">
+      <div class="crumbs-edit__block">
+        <h4>${title}</h4>
+        <p class="crumbs-edit__text">
+          ${summary}
+        </p>
+      </div>
+      <div class="crumbs-toggle">
+        <input
+          type="checkbox"
+          name=${identifier}
+          id=${identifier}
+          class="crumbs-checkbox"
+        />
+        <label for=${identifier} class="crumbs-toggle__checkbox">
+          ${title}
+        </label>
+      </div>
+    </div>`;
   }
 
   /**
@@ -247,7 +283,7 @@ export default class Crumbs extends EventEmitter {
    * Set the cookie_consent cookie that determines whether the banner is shown or not
    */
   setAcceptanceCookie() {
-    this.setCookie('cookie_consent', this.days);
+    this.setCookie(this.cookieName, this.days);
   }
 
   /**
@@ -271,10 +307,33 @@ export default class Crumbs extends EventEmitter {
     }
 
     const setCookieBoolean = this.types.map((cookie) => {
-      return this.accepted.includes(cookie);
+      return this.accepted.includes(cookie.identifier);
     });
 
     const value = ['v1', ...setCookieBoolean].join('|');
     document.cookie = `${name}=${value || ''}${maxAge}; path=/`;
   }
 }
+const CookieBanner = new Crumbs({
+  editCookieButton: document.querySelector('.edit-cookies'),
+  days: 1,
+  types: [
+    {
+      identifier: 'functional',
+      required: true,
+      summary:
+        'These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages. If you do not allow these cookies then some or all of these services may not function properly.',
+      title: 'Functional',
+    },
+    {
+      identifier: 'targeting',
+      required: true,
+      summary:
+        'These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and internet device. If you do not allow these cookies, you will experience less targeted advertising.',
+      title: 'Targeting',
+    },
+  ],
+});
+CookieBanner.on('onSave', (preferences) => {
+  console.log(preferences);
+});
