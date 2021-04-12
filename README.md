@@ -55,7 +55,15 @@ There is currently two required options that you need to pass to the Crumbs cons
 
 `days`: The duration of the cookie that is set on acceptance
 
-You can also specify the types of cookies your site set by specifying an Array as part of the `types` property. E.g. if your site only potentially uses functional cookies then you would pass `types: ['functional']` to Crumbs. The default of the types Array is `['functional', 'performance', 'targeting']`.
+You can also specify the types of cookies your site can set by specifying an Array of objects as part of the `types` property. Each object must contain the following properties:
+
+`identifier: 'functional'` The unique name of the type of cookie.
+
+`required: true` A boolean on whether or not this type of cookie is required.
+
+`summary: 'A summary about the type of cookie'` An explanation about the type of cookie you are allowing the user to set and why these are used.
+
+`title: 'Functional'` A capitalised version of the `identifier` that is used as the heading on the edit dialog popup.
 
 **Example**
 
@@ -79,9 +87,9 @@ There are however some colours that you can override with some CSS custom proper
 
 ```
 :root {
-  --edit-crumbs-bg: #f4f4f4;
-  --edit-crumbs-overlay: rgba(0, 0, 0, 0.4);
-  --edit-crumbs-cta-bg: gainsboro;
+  --crumbs-edit--bg: #f4f4f4;
+  --crumbs-edit-overlay: rgba(0, 0, 0, 0.4);
+  --crumbs-edit-cta-bg: gainsboro;
   --crumbs-toggle-switch-bg: #858585;
   --crumbs-toggle-checked-bg: #e0e0e0;
   --crumbs-toggle-border-color: #dddddd;

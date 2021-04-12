@@ -17,12 +17,6 @@ test('Check the cookie name is returned', () => {
   expect(cookies.getCookie()).toBe('cookie_consent');
 });
 
-test('Set a cookie', () => {
-  const set = jest.spyOn(cookies, 'setCookie');
-  cookies.setCookie('name', true, 1);
-  expect(set).toHaveBeenCalledWith('name', true, 1);
-});
-
 afterEach(() => {
   jest.clearAllMocks();
 });
