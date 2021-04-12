@@ -49,7 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## Options
 
-There is currently two required options that you need to pass to the Crumbs constructor
+There are a number of options that are required for the Crumbs constructor
+
+`cookieName`: Give the cookie your own name. If not specified then the default is `cookie_consent`
 
 `editSettingsButton`: This is an HTMLElement that you want to attach an event listener too in order for the user to change the cookie settings
 
@@ -71,9 +73,18 @@ You can also specify the types of cookies your site can set by specifying an Arr
 document.addEventListener('DOMContentLoaded', () => {
 
   const cookies = new Crumbs({
+    cookieName: 'cookie_name',
     editSettingsButtons: document.querySelector('.edit-cookies'),
     days: 365,
-    types: ['functional', 'performance'] // If you only set functional or performance cookies
+    types: [
+      {
+        identifier: 'functional',
+        required: true,
+        summary:
+          'These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages. If you do not allow these cookies then some or all of these services may not function properly.',
+        title: 'Functional',
+      }
+    ]
   });
 
 });
