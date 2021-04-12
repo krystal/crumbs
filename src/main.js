@@ -230,7 +230,7 @@ export default class Crumbs extends EventEmitter {
    */
   acceptCookies() {
     const checkboxes = Array.from(
-      document.querySelectorAll('input[type="checkbox"]')
+      this.editScreen.querySelectorAll('input[type="checkbox"]')
     );
     const accepted = checkboxes
       .filter((checkbox) => {
