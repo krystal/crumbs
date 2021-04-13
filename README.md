@@ -6,7 +6,7 @@ A small package that will determine which cookies a user is willing to accept.
 
 Node > 10.13
 
-## Installation and developing locally.
+## Installation and developing locally
 
 1. Clone the repo via `git clone git@github.com:krystal/crumbs.git`
 2. `npm install`

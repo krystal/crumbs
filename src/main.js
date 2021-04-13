@@ -102,6 +102,35 @@ export default class Crumbs extends EventEmitter {
   }
 
   /**
+   * Creates the necessary HTML for the creation of the edit screen
+   * @param {String} title The title of the cookie section
+   * @param {String} summary The summary of the cookie category that is being set
+   * @param {String} identifier An identifier which is used to assign a unique name to the checkbox
+   * @returns {HTMLElement}
+   */
+  createTemplate(title, summary, identifier) {
+    return `<div class="crumbs-edit__section">
+      <div class="crumbs-edit__block">
+        <h4>${title}</h4>
+        <p class="crumbs-edit__text">
+          ${summary}
+        </p>
+      </div>
+      <div class="crumbs-toggle">
+        <input
+          type="checkbox"
+          name=${identifier}
+          id=${identifier}
+          class="crumbs-checkbox"
+        />
+        <label for=${identifier} class="crumbs-toggle__checkbox">
+          ${title}
+        </label>
+      </div>
+    </div>`;
+  }
+
+  /**
    * The function that closes the edit cookie settings screen
    * @param  {Event Object} event The element that we want to set focus on
    */
@@ -165,7 +194,7 @@ export default class Crumbs extends EventEmitter {
   }
 
   /**
-   * This will attach the relevant components to the edit screen depending on what was provided via
+   * This method will attach the relevant components to the edit screen depending on what was provided via
    * the 'types' property
    */
   addPreferences() {
@@ -182,35 +211,6 @@ export default class Crumbs extends EventEmitter {
       const el = this.createTemplate(title, summary, identifier);
       cookieTypeWrapper.insertAdjacentHTML('beforeend', el);
     });
-  }
-
-  /**
-   * Creates the necessary HTML for the creation of the edit screen
-   * @param {String} title The title of the cookie section
-   * @param {String} summary The summary of the cookie category that is being set
-   * @param {String} identifier An identifier which is used to assign a unique name to the checkbox
-   * @returns {HTMLElement}
-   */
-  createTemplate(title, summary, identifier) {
-    return `<div class="crumbs-edit__section">
-      <div class="crumbs-edit__block">
-        <h4>${title}</h4>
-        <p class="crumbs-edit__text">
-          ${summary}
-        </p>
-      </div>
-      <div class="crumbs-toggle">
-        <input
-          type="checkbox"
-          name=${identifier}
-          id=${identifier}
-          class="crumbs-checkbox"
-        />
-        <label for=${identifier} class="crumbs-toggle__checkbox">
-          ${title}
-        </label>
-      </div>
-    </div>`;
   }
 
   /**
