@@ -53,7 +53,9 @@ There are a number of options that are required for the Crumbs constructor
 
 `cookieName`: Give the cookie your own name. If not specified then the default is `cookie_consent`
 
-`editSettingsButton`: This is an HTMLElement that you want to attach an event listener too in order for the user to change the cookie settings
+`domain`: The domain you wish to set the cookie on
+
+`editCookieButton`: This is an HTMLElement that you want to attach an event listener too in order for the user to change the cookie settings
 
 `days`: The duration of the cookie that is set on acceptance
 
@@ -74,7 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const cookies = new Crumbs({
     cookieName: 'cookie_name',
-    editSettingsButtons: document.querySelector('.edit-cookies'),
+    domain: '.domain.com',
+    editCookieButtons: document.querySelector('.edit-cookies'),
     days: 365,
     types: [
       {

@@ -43,7 +43,7 @@ module.exports = {
 
   devServer: {
     contentBase: path.join(__dirname, 'public/'),
-    port: 4000,
-    publicPath: 'http://localhost:4000/dist/',
+    port: 4001,
+    publicPath: 'http://localhost:4001/dist/',
   },
 };

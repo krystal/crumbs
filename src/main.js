@@ -4,17 +4,12 @@ import { cookieBanner } from './components/cookieBanner';
 import './main.css';
 
 export default class Crumbs extends EventEmitter {
-  constructor({ cookieName, editCookieButton, days, types }) {
+  constructor({ cookieName, domain, days, editCookieButton, types }) {
     super();
-    this.acceptance = null;
-    this.accepted = null;
-    this.banner = null;
     this.cookieName = cookieName || 'cookie_consent';
+    this.domain = domain;
     this.days = days;
-    this.editAcceptButton = null;
     this.editCookieButton = editCookieButton;
-    this.editScreen = null;
-    this.editSettingsButton = null;
     this.types = types;
     this.render();
   }
@@ -311,6 +306,23 @@ export default class Crumbs extends EventEmitter {
     });
 
     const value = ['v1', ...setCookieBoolean].join('|');
-    document.cookie = `${name}=${value || ''}${maxAge}; path=/`;
+    document.cookie = `${name}=${value || ''};domain=${
+      this.domain
+    }${maxAge}; path=/`;
   }
 }
+
+const cookies = new Crumbs({
+  domain: 'localhost',
+  editCookieButton: document.querySelector('.edit-cookies'),
+  days: 365,
+  types: [
+    {
+      identifier: 'functional',
+      required: true,
+      summary:
+        'These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages. If you do not allow these cookies then some or all of these services may not function properly.',
+      title: 'Functional',
+    },
+  ],
+});
