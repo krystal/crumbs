@@ -103,7 +103,7 @@ class Crumbs extends EventEmitter {
    * @param {String} identifier An identifier which is used to assign a unique name to the checkbox
    * @returns {HTMLElement}
    */
-  createTemplate(title, summary, identifier) {
+  createTemplate(title, summary, identifier, required) {
     return `<div class="crumbs-edit__section">
       <div class="crumbs-edit__block">
         <h4>${title}</h4>
@@ -117,8 +117,12 @@ class Crumbs extends EventEmitter {
           name=${identifier}
           id=${identifier}
           class="crumbs-checkbox"
+          ${required ? 'checked="checked"' : ''}
+          ${required ? 'disabled="disabled"' : ''}
         />
-        <label for=${identifier} class="crumbs-toggle__checkbox">
+        <label for=${identifier} class="crumbs-toggle__checkbox ${
+      required ? 'crumbs-toggle__checkbox--required' : ''
+    }">
           ${title}
         </label>
       </div>
@@ -200,10 +204,9 @@ class Crumbs extends EventEmitter {
     }
 
     this.types.map((type) => {
-      const { title, summary, identifier } = type;
-
-      const el = this.createTemplate(title, summary, identifier);
-      cookieTypeWrapper.insertAdjacentHTML("beforeend", el);
+      const { title, summary, identifier, required } = type;
+      const el = this.createTemplate(title, summary, identifier, required);
+      cookieTypeWrapper.insertAdjacentHTML('beforeend', el);
     });
   }
 
@@ -312,3 +315,4 @@ class Crumbs extends EventEmitter {
 }
 
 export default Crumbs;
+
