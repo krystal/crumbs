@@ -1,24 +1,24 @@
-const path = require('path');
-const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const libraryName = 'Crumbs';
+const path = require("path");
+const webpack = require("webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+const libraryName = "Crumbs";
 
 module.exports = {
-  entry: ['./src/main.js'],
-  mode: 'none',
-  plugins: [new MiniCssExtractPlugin({ filename: '[name].css' })],
+  entry: ["./src/main.js"],
+  mode: "none",
+  plugins: [new MiniCssExtractPlugin({ filename: "[name].css" })],
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules)/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
@@ -26,24 +26,25 @@ module.exports = {
     minimize: true,
     minimizer: [
       new CssMinimizerPlugin(),
-      new TerserPlugin({
-        parallel: true,
-      }),
+      // new TerserPlugin({
+      //   parallel: true,
+      // }),
     ],
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    chunkFilename: '[name].chunk.js',
-    publicPath: '/dist/',
-    filename: '[name].js',
-    library: libraryName,
-    libraryTarget: 'umd',
-    umdNamedDefine: true,
+    path: path.resolve(__dirname, "dist"),
+    chunkFilename: "[name].chunk.js",
+    publicPath: "/dist/",
+    filename: "[name].js",
+    library: {
+      name: libraryName,
+      type: "window",
+    },
   },
 
   devServer: {
-    contentBase: path.join(__dirname, 'public/'),
+    contentBase: path.join(__dirname, "public/"),
     port: 4001,
-    publicPath: 'http://localhost:4001/dist/',
+    publicPath: "http://localhost:4001/dist/",
   },
 };

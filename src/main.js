@@ -1,12 +1,12 @@
-import { EventEmitter } from 'events';
-import { editScreen } from './components/editScreen';
-import { cookieBanner } from './components/cookieBanner';
-import './main.css';
+import { EventEmitter } from "events";
+import { editScreen } from "./components/editScreen";
+import { cookieBanner } from "./components/cookieBanner";
+import "./main.css";
 
-export default class Crumbs extends EventEmitter {
+class Crumbs extends EventEmitter {
   constructor({ cookieName, domain, days, editCookieButton, types }) {
     super();
-    this.cookieName = cookieName || 'cookie_consent';
+    this.cookieName = cookieName || "cookie_consent";
     this.domain = domain;
     this.days = days;
     this.editCookieButton = editCookieButton;
@@ -22,14 +22,14 @@ export default class Crumbs extends EventEmitter {
     if (!this.getCookie(this.cookieName)) {
       // Create the banner itself as a template literal and add it
       // to the DOM, at the end of the body
-      document.body.insertAdjacentHTML('beforeend', cookieBanner);
+      document.body.insertAdjacentHTML("beforeend", cookieBanner);
 
       // As we have created this we can have access to it now for removing later
-      this.banner = document.querySelector('.crumbs-banner');
+      this.banner = document.querySelector(".crumbs-banner");
 
       // Clicking on accept all sets all the cookies and hides the banner
-      const acceptCookies = document.querySelector('.crumbs-accept-all');
-      acceptCookies.addEventListener('click', () => {
+      const acceptCookies = document.querySelector(".crumbs-accept-all");
+      acceptCookies.addEventListener("click", () => {
         // As we are accepting all, we can send back everything that the
         // consumer provided via the 'types' property
         this.accepted = this.getCookieTypes(this.types);
@@ -37,12 +37,12 @@ export default class Crumbs extends EventEmitter {
         this.setAcceptanceCookie();
         this.removeBanner(this.banner);
 
-        this.emit('onSave', this.accepted);
+        this.emit("onSave", this.accepted);
       });
 
       // Select our edit button, assign it to the constructor and pass
       // it to our editSettings method
-      this.editSettingsButton = document.querySelector('.crumbs-edit-settings');
+      this.editSettingsButton = document.querySelector(".crumbs-edit-settings");
       this.editSettings(this.editSettingsButton);
     }
 
@@ -56,8 +56,8 @@ export default class Crumbs extends EventEmitter {
     // Add the relevant preferences that have been specified by the types Array
     this.addPreferences();
 
-    this.editCookieButton.addEventListener('click', () => {
-      document.body.insertAdjacentElement('beforeend', this.editScreen);
+    this.editCookieButton.addEventListener("click", () => {
+      document.body.insertAdjacentElement("beforeend", this.editScreen);
 
       this.editAccept();
       this.closeEditScreen();
@@ -73,7 +73,7 @@ export default class Crumbs extends EventEmitter {
    */
   editSettings(editHandler) {
     // Add the edit cookies modal to the DOM when selected
-    editHandler.addEventListener('click', this.showSettings.bind(this));
+    editHandler.addEventListener("click", this.showSettings.bind(this));
   }
 
   /**
@@ -134,13 +134,13 @@ export default class Crumbs extends EventEmitter {
    * @param  {Event Object} event The element that we want to set focus on
    */
   closeOnEscape(event) {
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       if (this.editSettingsButton) {
         this.setFocus(this.editSettingsButton);
       }
       this.editScreen.remove();
       this.enableScroll();
-      this.editAcceptButton.removeEventListener('click', this.acceptance);
+      this.editAcceptButton.removeEventListener("click", this.acceptance);
     }
   }
 
@@ -148,23 +148,23 @@ export default class Crumbs extends EventEmitter {
    * Add event listener to close the edit settings screen
    */
   setCloseOnEscape() {
-    document.addEventListener('keydown', this.closeOnEscape.bind(this));
+    document.addEventListener("keydown", this.closeOnEscape.bind(this));
   }
 
   /**
    * Prevent scrolling when the edit cookie settings component is open
    */
   disableScroll() {
-    document.body.style.overflow = 'hidden';
-    document.body.classList.add('crumbs-overlay');
+    document.body.style.overflow = "hidden";
+    document.body.classList.add("crumbs-overlay");
   }
 
   /**
    * Re-enable scrolling when the edit cookie settings component is closed
    */
   enableScroll() {
-    document.body.style.overflow = '';
-    document.body.classList.remove('crumbs-overlay');
+    document.body.style.overflow = "";
+    document.body.classList.remove("crumbs-overlay");
   }
 
   /**
@@ -172,19 +172,19 @@ export default class Crumbs extends EventEmitter {
    * and enable scrolling of the viewport again
    */
   closeEditScreen() {
-    const editClose = this.editScreen.querySelector('.crumbs-edit-close');
-    editClose.addEventListener('click', () => {
+    const editClose = this.editScreen.querySelector(".crumbs-edit-close");
+    editClose.addEventListener("click", () => {
       if (this.editSettingsButton) {
         this.setFocus(this.editSettingsButton);
       }
       this.editScreen.remove();
       this.enableScroll();
-      this.editAcceptButton.removeEventListener('click', this.acceptance);
+      this.editAcceptButton.removeEventListener("click", this.acceptance);
     });
   }
 
   showSettings() {
-    document.body.insertAdjacentElement('beforeend', this.editScreen);
+    document.body.insertAdjacentElement("beforeend", this.editScreen);
     this.editAccept();
     this.closeEditScreen();
     this.setFocus(this.editScreen);
@@ -197,9 +197,8 @@ export default class Crumbs extends EventEmitter {
    * the 'types' property
    */
   addPreferences() {
-    const cookieTypeWrapper = this.editScreen.querySelector(
-      '#cookie-categories'
-    );
+    const cookieTypeWrapper =
+      this.editScreen.querySelector("#cookie-categories");
     if (!this.types) {
       return;
     }
@@ -216,10 +215,10 @@ export default class Crumbs extends EventEmitter {
    * consumer to determine which cookies have been selected
    */
   editAccept() {
-    const editAccept = this.editScreen.querySelector('.crumbs-edit-accept');
+    const editAccept = this.editScreen.querySelector(".crumbs-edit-accept");
     this.editAcceptButton = editAccept;
     this.acceptance = this.acceptCookies.bind(this);
-    this.editAcceptButton.addEventListener('click', this.acceptance);
+    this.editAcceptButton.addEventListener("click", this.acceptance);
   }
 
   /**
@@ -241,12 +240,12 @@ export default class Crumbs extends EventEmitter {
       });
     this.accepted = accepted;
 
-    this.editAcceptButton.removeEventListener('click', this.acceptance);
+    this.editAcceptButton.removeEventListener("click", this.acceptance);
     this.removeBanner(this.editScreen);
     if (this.banner) {
       this.removeBanner(this.banner);
     }
-    this.emit('onSave', this.accepted);
+    this.emit("onSave", this.accepted);
     this.setAcceptanceCookie();
 
     this.enableScroll();
@@ -258,14 +257,14 @@ export default class Crumbs extends EventEmitter {
    * @returns {String} true | false
    */
   getCookie(cookieName) {
-    const name = cookieName + '=';
+    const name = cookieName + "=";
     const decodedCookie = decodeURIComponent(document.cookie);
-    const ca = decodedCookie.split(';');
+    const ca = decodedCookie.split(";");
 
     for (let i = 0; i < ca.length; i++) {
       let c = ca[i];
 
-      while (c.charAt(0) == ' ') {
+      while (c.charAt(0) == " ") {
         c = c.substring(1);
       }
 
@@ -274,7 +273,7 @@ export default class Crumbs extends EventEmitter {
       }
     }
 
-    return '';
+    return "";
   }
 
   /**
@@ -298,7 +297,7 @@ export default class Crumbs extends EventEmitter {
    * @param  {Number} days The number of days the cookie should be set for before expiring (max-age)
    */
   setCookie(name, days) {
-    let maxAge = '';
+    let maxAge = "";
     if (days) {
       const time = 86400 * days;
       maxAge = `; max-age=${time}`;
@@ -308,9 +307,12 @@ export default class Crumbs extends EventEmitter {
       return this.accepted.includes(cookie.identifier);
     });
 
-    const value = ['v1', ...setCookieBoolean].join('|');
-    document.cookie = `${name}=${value || ''};domain=${
+    const value = ["v1", ...setCookieBoolean].join("|");
+    document.cookie = `${name}=${value || ""};domain=${
       this.domain
     }${maxAge}; path=/`;
   }
 }
+
+export default Crumbs;
+
