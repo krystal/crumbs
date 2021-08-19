@@ -82,10 +82,7 @@ class Crumbs extends EventEmitter {
    * @returns {String[]} An array of string identifiers
    */
   getCookieTypes(types) {
-    const cookies = types.map((type) => {
-      return type.identifier;
-    });
-    return cookies;
+    return types.map((type) => type.identifier);
   }
 
   /**
@@ -116,14 +113,14 @@ class Crumbs extends EventEmitter {
           type="checkbox"
           name=${identifier}
           id=${identifier}
-          class="crumbs-checkbox"
+          class="crumbs-checkbox crumbs__sr"
           ${required ? 'checked="checked"' : ''}
           ${required ? 'disabled="disabled"' : ''}
         />
         <label for=${identifier} class="crumbs-toggle__checkbox ${
       required ? 'crumbs-toggle__checkbox--required' : ''
     }">
-          ${title}
+          <span class="crumbs__sr">${title}</span>
         </label>
       </div>
     </div>`;
@@ -183,13 +180,57 @@ class Crumbs extends EventEmitter {
     });
   }
 
+  /**
+  Opens the edit cookie modal and performs various actions
+  */
   showSettings() {
     document.body.insertAdjacentElement('beforeend', this.editScreen);
+    this.prepareFocusableElements();
     this.editAccept();
     this.closeEditScreen();
     this.setFocus(this.editScreen);
     this.disableScroll();
     this.setCloseOnEscape();
+  }
+
+  /**
+   * This method will trap the focus within the edit cookies modal
+   */
+  prepareFocusableElements() {
+    // We know in advance that we only need to focus on buttons and input elements hence the explicit declaration
+    // We also filter out disabled elements as these are not focusable by keyboard
+    const focusableElements = [
+      ...this.editScreen.querySelectorAll('input, button'),
+    ].filter((el) => !el.hasAttribute('disabled'));
+    this.focusable = focusableElements;
+    this.firstFocusableEl = this.focusable[0];
+    this.lastFocusableEl = this.focusable[this.focusable.length - 1];
+    this.setFocusElements = this.trapFocus.bind(this);
+    document.addEventListener('keydown', this.setFocusElements);
+  }
+
+  /**
+   *
+   * @param {The event object} evt
+   */
+  trapFocus(evt) {
+    let isTabPressed = evt.key === 'Tab';
+
+    if (!isTabPressed) {
+      return;
+    }
+
+    if (evt.shiftKey) {
+      if (document.activeElement === this.firstFocusableEl) {
+        this.setFocus(this.lastFocusableEl);
+        evt.preventDefault();
+      }
+    } else {
+      if (document.activeElement === this.lastFocusableEl) {
+        this.setFocus(this.firstFocusableEl);
+        evt.preventDefault();
+      }
+    }
   }
 
   /**
@@ -236,6 +277,7 @@ class Crumbs extends EventEmitter {
     this.accepted = accepted;
 
     this.editAcceptButton.removeEventListener('click', this.acceptance);
+    document.removeEventListener('keydown', this.setFocusElements);
     this.removeBanner(this.editScreen);
     if (this.banner) {
       this.removeBanner(this.banner);
@@ -308,5 +350,36 @@ class Crumbs extends EventEmitter {
     }${maxAge}; path=/`;
   }
 }
+
+const btn = document.querySelector('.edit-cookies');
+
+const c = new Crumbs({
+  days: 365,
+  domain: 'localhost',
+  editCookieButton: btn,
+  types: [
+    {
+      identifier: 'functional',
+      required: true,
+      summary:
+        'There are a number of cookies we need to use in order for DeployHQ to work properly. These cannot be disabled.',
+      title: 'Functional',
+    },
+    {
+      identifier: 'analytics',
+      required: false,
+      summary:
+        'We use Google Analytics to measure the performance of our website. We do not store any personal data and your IP address is anonymised. Analytics is disabled in the application itself.',
+      title: 'Analytics',
+    },
+    {
+      identifier: 'live_chat',
+      required: false,
+      summary:
+        'We use a live chat service called Crisp so we can privide support to you where available. Various cookies are stored so chats remain active when you change page.',
+      title: 'Live Chat',
+    },
+  ],
+});
 
 export default Crumbs;

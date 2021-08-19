@@ -1,5 +1,5 @@
 export const editScreen = `
-  <div class="crumbs-edit" role="dialog" aria-labelledby="crumbs-dialog-title" aria-describedby="crumbs-dialog-descrption" tabIndex="0">
+  <div class="crumbs-edit" role="dialog" aria-labelledby="crumbs-dialog-title" aria-describedby="crumbs-dialog-descrption" tabindex="0">
     <div class="crumbs-edit__content">
       <div class="crumbs-edit__container">
         <h3 id="crumbs-dialog-title" class="crumbs-edit__title">Edit cookie settings</h3>
