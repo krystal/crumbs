@@ -11,7 +11,7 @@ Node > 10.13
 1. Clone the repo via `git clone git@github.com:krystal/crumbs.git`
 2. `npm install`
 3. `npm run dev` to start the deveopment server.
-4. Visit [http://localhost:4000](http://localhost:4000)
+4. Visit [http://localhost:4001](http://localhost:4001)
 
 ## Build
 
@@ -19,13 +19,7 @@ Node > 10.13
 
 ## Usage
 
-Crumbs returns a stringed array of the type cookies that are to be set.
-
-These types are:
-
-- functional
-- targeting
-- performance
+Crumbs returns a stringed array of the type cookies that are to be set which are defined by passing in objects to the `types` array.
 
 These are accessed by calling the `onSave` method after instantiation.
 
@@ -34,15 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const cookies = new Crumbs();
   cookies.on('onSave', (preferences) => {
-    if (preferences.includes('functional')) {
-      // Set some functional cookies
-    }
-    if (preferences.includes('targeting')) {
-      // Set some targeting cookies
-    }
-    if (preferences.includes('performance')) {
-      // Set some performance cookies
-    }
+    // Do some stuff
   });
 });
 ```
@@ -63,11 +49,13 @@ You can also specify the types of cookies your site can set by specifying an Arr
 
 `identifier: 'functional'` The unique name of the type of cookie.
 
-`required: true` A boolean on whether or not this type of cookie is required.
+`required: true` A boolean on whether or not this type of cookie is 100% needed for your site/application to be operational.
 
-`summary: 'A summary about the type of cookie'` An explanation about the type of cookie you are allowing the user to set and why these are used.
+`summary: 'A summary about the type of cookie'` An explanation about the type of cookie you are allowing the user to set and why these are being used.
 
 `title: 'Functional'` A capitalised version of the `identifier` that is used as the heading on the edit dialog popup.
+
+`types` An array of objects with each one containing a `identifier`, `summary`, `required` and a `title`
 
 **Example**
 
@@ -86,7 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
         summary:
           'These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages. If you do not allow these cookies then some or all of these services may not function properly.',
         title: 'Functional',
-      }
+      },
+
+      // More types here
+
     ]
   });
 
@@ -107,7 +98,7 @@ There are however some colours that you can override with some CSS custom proper
   --crumbs-toggle-switch-bg: #858585;
   --crumbs-toggle-checked-bg: #e0e0e0;
   --crumbs-toggle-border-color: #dddddd;
-  --crumbs-toggle-switch-border-color: #a8a8a8;
+  --crumbs-toggle-switch-focus-border-color: #a8a8a8;
 }
 ```
 
