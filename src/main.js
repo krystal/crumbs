@@ -267,13 +267,13 @@ class Crumbs extends EventEmitter {
    * need to be set by checking which checkboxes were activated.
    */
   acceptCookies() {
-    const checkboxes = Array.from(
-      this.editScreen.querySelectorAll('input[type="checkbox"]')
-    );
+    const checkboxes = [
+      ...this.editScreen.querySelectorAll('input[type="checkbox"]'),
+    ];
     const accepted = checkboxes
-      .filter((checkbox) => checkbox.checked === true)
+      .filter((checkbox) => checkbox.checked)
       .map((c) => c.name);
-
+    console.log(accepted);
     this.accepted = accepted;
 
     this.editAcceptButton.removeEventListener('click', this.acceptance);
@@ -350,5 +350,27 @@ class Crumbs extends EventEmitter {
     }${maxAge}; path=/`;
   }
 }
+
+const editCookies = document.querySelector('.edit-cookies');
+const CookieBanner = new Crumbs({
+  editCookieButton: editCookies,
+  days: 365,
+  types: [
+    {
+      identifier: 'functional',
+      required: true,
+      summary:
+        'These cookies enable the website to provide enhanced functionality and personalisation. They may be set by us or by third party providers whose services we have added to our pages. If you do not allow these cookies then some or all of these services may not function properly.',
+      title: 'Functional',
+    },
+    {
+      identifier: 'targeting',
+      required: false,
+      summary:
+        'These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant adverts on other sites. They do not store directly personal information, but are based on uniquely identifying your browser and internet device. If you do not allow these cookies, you will experience less targeted advertising.',
+      title: 'Targeting',
+    },
+  ],
+});
 
 export default Crumbs;
