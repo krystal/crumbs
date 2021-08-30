@@ -37,25 +37,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 There are a number of options that are required for the Crumbs constructor
 
-`cookieName`: Give the cookie your own name. If not specified then the default is `cookie_consent`
+| Option           | Description                                                                                                              | Type        |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------- |
+| cookieName       | The name you would like the give the cookie                                                                              | string      |
+| days             | The duration of the cookie that is set on acceptance                                                                     | number      |
+| domain           | The domain you wish to set the cookie on                                                                                 | string      |
+| editCookieButton | This is an HTMLElement that you want to attach an event listener too in order for the user to change the cookie settings | HTMLElement |
+| types | An array of objects with each one containing a `identifier`, `summary`, `required` and a `title` | object[] |
 
-`domain`: The domain you wish to set the cookie on
 
-`editCookieButton`: This is an HTMLElement that you want to attach an event listener too in order for the user to change the cookie settings
+A `type` itself is made up of the following items
 
-`days`: The duration of the cookie that is set on acceptance
+| Option | Description | Type | Example
+| ---------------- | ----------- | --------- | -------- |
+| identifier | The unique name of the type of cookie | string | 'functional'
+| required | A boolean on whether or not this type of cookie is 100% needed for your site/application to be operational | boolean | true
+| summary | An explanation about the type of cookie you are allowing the user to set and why these are being used | string | 'A summary of what this type of cookie provides functionally'
+| title | A capitalised version of the `identifier` that is used as the heading on the edit dialog popup | string | 'Functional'
 
-You can also specify the types of cookies your site can set by specifying an Array of objects as part of the `types` property. Each object must contain the following properties:
-
-`identifier: 'functional'` The unique name of the type of cookie.
-
-`required: true` A boolean on whether or not this type of cookie is 100% needed for your site/application to be operational.
-
-`summary: 'A summary about the type of cookie'` An explanation about the type of cookie you are allowing the user to set and why these are being used.
-
-`title: 'Functional'` A capitalised version of the `identifier` that is used as the heading on the edit dialog popup.
-
-`types` An array of objects with each one containing a `identifier`, `summary`, `required` and a `title`
 
 **Example**
 
