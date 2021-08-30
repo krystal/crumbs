@@ -273,7 +273,7 @@ class Crumbs extends EventEmitter {
     const accepted = checkboxes
       .filter((checkbox) => checkbox.checked)
       .map((c) => c.name);
-    console.log(accepted);
+
     this.accepted = accepted;
 
     this.editAcceptButton.removeEventListener('click', this.acceptance);
