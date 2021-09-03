@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## Options
 
-There are a number of options that are required for the Crumbs constructor
+There are a number of options that are required for the Crumbs constructor.
 
 | Option           | Description                                                                                                              | Type        |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------- |
@@ -43,18 +43,16 @@ There are a number of options that are required for the Crumbs constructor
 | days             | The duration of the cookie that is set on acceptance                                                                     | number      |
 | domain           | The domain you wish to set the cookie on                                                                                 | string      |
 | editCookieButton | This is an HTMLElement that you want to attach an event listener too in order for the user to change the cookie settings | HTMLElement |
-| types | An array of objects with each one containing a `identifier`, `summary`, `required` and a `title` | object[] |
-
+| types            | An array of objects with each one containing a `identifier`, `summary`, `required` and a `title`                         | object[]    |
 
 A `type` itself is made up of the following items
 
-| Option | Description | Type | Example
-| ---------------- | ----------- | --------- | -------- |
-| identifier | The unique name of the type of cookie | string | 'functional'
-| required | A boolean on whether or not this type of cookie is 100% needed for your site/application to be operational | boolean | true
-| summary | An explanation about the type of cookie you are allowing the user to set and why these are being used | string | 'A summary of what this type of cookie provides functionally'
-| title | A capitalised version of the `identifier` that is used as the heading on the edit dialog popup | string | 'Functional'
-
+| Option     | Description                                                                                                | Type    | Example                                                       |
+| ---------- | ---------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------- |
+| identifier | The unique name of the type of cookie                                                                      | string  | 'functional'                                                  |
+| required   | A boolean on whether or not this type of cookie is 100% needed for your site/application to be operational | boolean | true                                                          |
+| summary    | An explanation about the type of cookie you are allowing the user to set and why these are being used      | string  | 'A summary of what this type of cookie provides functionally' |
+| title      | A capitalised version of the `identifier` that is used as the heading on the edit dialog popup             | string  | 'Functional'                                                  |
 
 **Example**
 
