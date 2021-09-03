@@ -1,12 +1,12 @@
 declare module "krystal-crumbs" {
-  interface Cookie {
+  interface Crumb {
     identifier: string;
     required: true;
     summary: string;
     title: string;
   }
 
-  type types = Cookie[];
+  type types = Crumb[];
   type banner = HTMLElement;
   type cookieName = string;
   type domain = string;
@@ -24,6 +24,8 @@ declare module "krystal-crumbs" {
     render(): void;
 
     acceptCookies(): void;
+
+    createTemplate(data: Crumb): HTMLDivElement;
 
     editSettings(element: HTMLButtonElement): void;
 
