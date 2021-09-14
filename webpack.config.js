@@ -6,11 +6,16 @@ const TerserPlugin = require("terser-webpack-plugin");
 const libraryName = "Crumbs";
 
 module.exports = {
-  entry: ["./src/main.js"],
+  entry: ["./src/main.ts"],
   mode: "none",
   plugins: [new MiniCssExtractPlugin({ filename: "[name].css" })],
+  resolve: {
+    extensions: [".ts", ".tsx", ".js"],
+  },
   module: {
     rules: [
+      { test: /\.tsx?$/, loader: "ts-loader" },
+      { test: /\.js$/, loader: "source-map-loader" },
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules)/,
