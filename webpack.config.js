@@ -4,11 +4,17 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const libraryName = "Crumbs";
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: ["./src/main.ts"],
   mode: "none",
-  plugins: [new MiniCssExtractPlugin({ filename: "[name].css" })],
+  plugins: [
+    new MiniCssExtractPlugin({ filename: "[name].css" }),
+    new CopyPlugin({
+      patterns: [{ from: "./src/main.d.ts" }],
+    }),
+  ],
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
   },
