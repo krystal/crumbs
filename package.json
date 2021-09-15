@@ -59,6 +59,6 @@
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
     }
   },
-  "types": "crumbs.d.ts",
+  "types": "./dist/main.d.ts",
   "homepage": "https://github.com/krystal/crumbs#readme"
 }

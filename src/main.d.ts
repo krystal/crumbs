@@ -14,11 +14,11 @@ declare module "krystal-crumbs" {
     types: Crumb[];
   };
 
-  export type callback = () => void;
+  export type callback = (preferences?: string[]) => void;
   class Crumbs {
     constructor({}: CrumbsData);
 
-    on(eventName: string, cb: callback): string[] | void;
+    on(eventName: string, callback: callback): string[] | void;
   }
   export default Crumbs;
 }
