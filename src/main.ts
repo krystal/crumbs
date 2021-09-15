@@ -256,7 +256,7 @@ class Crumbs extends EventEmitter {
 
   /**
    *
-   * @param {Event} evt
+   * @param {KeyboardEvent} evt
    */
   private trapFocus(evt: KeyboardEvent) {
     let isTabPressed = evt.key === "Tab";
