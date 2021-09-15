@@ -3,8 +3,45 @@ import { editScreen } from "./components/editScreen";
 import { cookieBanner } from "./components/cookieBanner";
 import "./main.css";
 
+type Crumb = {
+  identifier: string;
+  required: boolean;
+  summary: string;
+  title: string;
+};
+
+type CrumbsData = {
+  cookieName?: string;
+  domain: string;
+  days: number;
+  editCookieButton: HTMLButtonElement;
+  types: Crumb[];
+};
+
 class Crumbs extends EventEmitter {
-  constructor({ cookieName, domain, days, editCookieButton, types }) {
+  private acceptance: () => void;
+  private accepted: string[];
+  private banner: HTMLDivElement;
+  cookieName: string;
+  domain: string;
+  days: number;
+  private editScreen: HTMLDivElement;
+  private editAcceptButton: HTMLButtonElement;
+  editCookieButton: HTMLButtonElement;
+  private editSettingsButton: HTMLButtonElement;
+  private focusable: Array<HTMLInputElement | HTMLButtonElement>;
+  private firstFocusableEl: HTMLButtonElement | HTMLInputElement;
+  private lastFocusableEl: HTMLButtonElement | HTMLInputElement;
+  types: Crumb[];
+  private setFocusElements: () => void;
+
+  constructor({
+    cookieName,
+    domain,
+    days,
+    editCookieButton,
+    types,
+  }: CrumbsData) {
     super();
     this.cookieName = cookieName || "cookie_consent";
     this.domain = domain;
@@ -17,7 +54,7 @@ class Crumbs extends EventEmitter {
   /**
    * Render the cookie banner and attach various elements
    */
-  render() {
+  private render() {
     // Render the Cookie banner if the cookie_consent cookie isn't true
     if (!this.getCookie(this.cookieName)) {
       // Create the banner itself as a template literal and add it
@@ -28,7 +65,8 @@ class Crumbs extends EventEmitter {
       this.banner = document.querySelector(".crumbs-banner");
 
       // Clicking on accept all sets all the cookies and hides the banner
-      const acceptCookies = document.querySelector(".crumbs-accept-all");
+      const acceptCookies: HTMLButtonElement =
+        document.querySelector(".crumbs-accept-all");
       acceptCookies.addEventListener("click", () => {
         // As we are accepting all, we can send back everything that the
         // consumer provided via the 'types' property
@@ -50,7 +88,7 @@ class Crumbs extends EventEmitter {
     const fragment = document
       .createRange()
       .createContextualFragment(editScreen);
-    const elementToAdd = fragment.firstElementChild;
+    const elementToAdd = fragment.firstElementChild as HTMLDivElement;
     this.editScreen = elementToAdd;
 
     // Add the relevant preferences that have been specified by the types Array
@@ -71,7 +109,7 @@ class Crumbs extends EventEmitter {
   /**
    * Add the editScreen component when the 'Edit Settings' button is clicked
    */
-  editSettings(editHandler) {
+  private editSettings(editHandler: HTMLButtonElement) {
     // Add the edit cookies modal to the DOM when selected
     editHandler.addEventListener("click", this.showSettings.bind(this));
   }
@@ -81,7 +119,7 @@ class Crumbs extends EventEmitter {
    * @param {Array} types An array containing a number of objects that define the types of cookie categories we wish to potentially set
    * @returns {String[]} An array of string identifiers
    */
-  getCookieTypes(types) {
+  private getCookieTypes(types: Crumb[]): string[] {
     return types.map((type) => type.identifier);
   }
 
@@ -89,7 +127,7 @@ class Crumbs extends EventEmitter {
    * Set the current focus on a particular element
    * @param  {HTMLElement} element The element that we want to set focus on
    */
-  setFocus(element) {
+  private setFocus(element: HTMLElement) {
     element.focus();
   }
 
@@ -100,7 +138,12 @@ class Crumbs extends EventEmitter {
    * @param {String} identifier An identifier which is used to assign a unique name to the checkbox
    * @returns {HTMLElement}
    */
-  createTemplate(title, summary, identifier, required) {
+  private createTemplate(
+    title: string,
+    summary: string,
+    identifier: string,
+    required: boolean
+  ) {
     return `<div class="crumbs-edit__section">
       <div class="crumbs-edit__block">
         <h4>${title}</h4>
@@ -128,9 +171,9 @@ class Crumbs extends EventEmitter {
 
   /**
    * The function that closes the edit cookie settings screen
-   * @param  {Event Object} event The element that we want to set focus on
+   * @param  {KeyboardEvent} event The element that we want to set focus on
    */
-  closeOnEscape(event) {
+  private closeOnEscape(event: KeyboardEvent) {
     if (event.key === "Escape") {
       if (this.editSettingsButton) {
         this.setFocus(this.editSettingsButton);
@@ -144,14 +187,14 @@ class Crumbs extends EventEmitter {
   /**
    * Add event listener to close the edit settings screen
    */
-  setCloseOnEscape() {
+  private setCloseOnEscape() {
     document.addEventListener("keydown", this.closeOnEscape.bind(this));
   }
 
   /**
    * Prevent scrolling when the edit cookie settings component is open
    */
-  disableScroll() {
+  private disableScroll() {
     document.body.style.overflow = "hidden";
     document.body.classList.add("crumbs-overlay");
   }
@@ -159,7 +202,7 @@ class Crumbs extends EventEmitter {
   /**
    * Re-enable scrolling when the edit cookie settings component is closed
    */
-  enableScroll() {
+  private enableScroll() {
     document.body.style.overflow = "";
     document.body.classList.remove("crumbs-overlay");
   }
@@ -168,7 +211,7 @@ class Crumbs extends EventEmitter {
    * Close the edit screen (not destroy), set the focus back to the edit settings button
    * and enable scrolling of the viewport again
    */
-  closeEditScreen() {
+  private closeEditScreen() {
     const editClose = this.editScreen.querySelector(".crumbs-edit-close");
     editClose.addEventListener("click", () => {
       if (this.editSettingsButton) {
@@ -183,7 +226,7 @@ class Crumbs extends EventEmitter {
   /**
   Opens the edit cookie modal and performs various actions
   */
-  showSettings() {
+  private showSettings() {
     document.body.insertAdjacentElement("beforeend", this.editScreen);
     this.prepareFocusableElements();
     this.editAccept();
@@ -196,12 +239,14 @@ class Crumbs extends EventEmitter {
   /**
    * This method will trap the focus within the edit cookies modal
    */
-  prepareFocusableElements() {
+  private prepareFocusableElements() {
     // We know in advance that we only need to focus on buttons and input elements hence the explicit declaration
     // We also filter out disabled elements as these are not focusable by keyboard
-    const focusableElements = [
-      ...this.editScreen.querySelectorAll("input, button"),
-    ].filter((el) => !el.hasAttribute("disabled"));
+    const focusableElements = Array.from(
+      this.editScreen.querySelectorAll("input, button")
+    ).filter((el) => !el.hasAttribute("disabled")) as Array<
+      HTMLInputElement | HTMLButtonElement
+    >;
     this.focusable = focusableElements;
     this.firstFocusableEl = this.focusable[0];
     this.lastFocusableEl = this.focusable[this.focusable.length - 1];
@@ -211,9 +256,9 @@ class Crumbs extends EventEmitter {
 
   /**
    *
-   * @param {The event object} evt
+   * @param {KeyboardEvent} evt
    */
-  trapFocus(evt) {
+  private trapFocus(evt: KeyboardEvent) {
     let isTabPressed = evt.key === "Tab";
 
     if (!isTabPressed) {
@@ -237,7 +282,7 @@ class Crumbs extends EventEmitter {
    * This method will attach the relevant components to the edit screen depending on what was provided via
    * the 'types' property
    */
-  addPreferences() {
+  private addPreferences() {
     const cookieTypeWrapper =
       this.editScreen.querySelector("#cookie-categories");
     if (!this.types) {
@@ -255,8 +300,10 @@ class Crumbs extends EventEmitter {
    * Emits the onSave event when preferences are set and provides a stringed array back to the
    * consumer to determine which cookies have been selected
    */
-  editAccept() {
-    const editAccept = this.editScreen.querySelector(".crumbs-edit-accept");
+  private editAccept() {
+    const editAccept: HTMLButtonElement = this.editScreen.querySelector(
+      ".crumbs-edit-accept"
+    );
     this.editAcceptButton = editAccept;
     this.acceptance = this.acceptCookies.bind(this);
     this.editAcceptButton.addEventListener("click", this.acceptance);
@@ -266,10 +313,10 @@ class Crumbs extends EventEmitter {
    * If the user decides to edit their cookie settings, this will determine which categories
    * need to be set by checking which checkboxes were activated.
    */
-  acceptCookies() {
-    const checkboxes = [
-      ...this.editScreen.querySelectorAll('input[type="checkbox"]'),
-    ];
+  private acceptCookies() {
+    const checkboxes: Array<HTMLInputElement> = Array.from(
+      this.editScreen.querySelectorAll('input[type="checkbox"]')
+    );
     const accepted = checkboxes
       .filter((checkbox) => checkbox.checked)
       .map((c) => c.name);
@@ -293,7 +340,7 @@ class Crumbs extends EventEmitter {
    * @param  {String} cookieName The name of the cookie we are checking
    * @returns {String} true | false
    */
-  getCookie(cookieName) {
+  private getCookie(cookieName: string): string {
     const name = cookieName + "=";
     const decodedCookie = decodeURIComponent(document.cookie);
     const ca = decodedCookie.split(";");
@@ -316,15 +363,15 @@ class Crumbs extends EventEmitter {
   /**
    * Set the cookie_consent cookie that determines whether the banner is shown or not
    */
-  setAcceptanceCookie() {
+  private setAcceptanceCookie() {
     this.setCookie(this.cookieName, this.days);
   }
 
   /**
    * Remove an element from the view
-   * @param  {HTMLElement} banner The banner we wish to remove
+   * @param  {HTMLDivElement} banner The banner we wish to remove
    */
-  removeBanner(banner) {
+  private removeBanner(banner: HTMLDivElement) {
     banner.remove();
   }
 
@@ -333,7 +380,7 @@ class Crumbs extends EventEmitter {
    * @param  {String} name The name of the cookie
    * @param  {Number} days The number of days the cookie should be set for before expiring (max-age)
    */
-  setCookie(name, days) {
+  private setCookie(name: string, days: number) {
     let maxAge = "";
     if (days) {
       const time = 86400 * days;
