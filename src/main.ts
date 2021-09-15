@@ -3,14 +3,14 @@ import { editScreen } from "./components/editScreen";
 import { cookieBanner } from "./components/cookieBanner";
 import "./main.css";
 
-export type Crumb = {
+type Crumb = {
   identifier: string;
   required: boolean;
   summary: string;
   title: string;
 };
 
-export type CrumbsData = {
+type CrumbsData = {
   cookieName?: string;
   domain: string;
   days: number;

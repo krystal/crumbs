@@ -20,5 +20,6 @@ declare module "krystal-crumbs" {
 
     on(eventName: string, callback: callback): string[] | void;
   }
+
   export default Crumbs;
 }
