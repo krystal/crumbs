@@ -54,7 +54,7 @@ class Crumbs extends EventEmitter {
   /**
    * Render the cookie banner and attach various elements
    */
-  render() {
+  private render() {
     // Render the Cookie banner if the cookie_consent cookie isn't true
     if (!this.getCookie(this.cookieName)) {
       // Create the banner itself as a template literal and add it
