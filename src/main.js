@@ -1,4 +1,4 @@
-import { EventEmitter } from "events";
+import { EventEmitter } from "./components/eventEmitter";
 import { editScreen } from "./components/editScreen";
 import { cookieBanner } from "./components/cookieBanner";
 import "./main.css";
@@ -22,7 +22,7 @@ class Crumbs extends EventEmitter {
     if (!this.getCookie(this.cookieName)) {
       // Create the banner itself as a template literal and add it
       // to the DOM, at the end of the body
-      document.body.insertAdjacentHTML("beforeend", cookieBanner);
+      document.body.insertAdjacentHTML("afterbegin", cookieBanner);
 
       // As we have created this we can have access to it now for removing later
       this.banner = document.querySelector(".crumbs-banner");
