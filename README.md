@@ -146,7 +146,7 @@ cookies.on('onSave', () => {
 
 When the cookie preferences are saved our custom GTM event triggers a check of what cookies have been set via a Regex table check against the different types that were provided to Crumbs.
 
-If we follow through with our above example and say that we accept the 'functional' and 'analytical' cookie types then the cookie being set will be:
+If we follow through with our above example and say that we accept the 'functional' and 'analytical' cookie types but reject the 'live chat' option then the cookie value will be:
 
 | Name        | Value                   |
 | ----------- | ----------------------- |
@@ -154,7 +154,7 @@ If we follow through with our above example and say that we accept the 'function
 
 And our check for the analytics cookie type in GTM will be:
 
-`^v1\|(true|false)\|**true**\|(true|false)$`
+`^v1\|(true|false)\|true\|(true|false)$`
 
 Given this information we can then go ahead and start to call any sort of analytics scripts that required this sort of consent.
 
