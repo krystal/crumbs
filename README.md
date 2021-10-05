@@ -5,30 +5,21 @@ uses and provides a list of the accepted categories.
 
 ## Table of Contents
 
-1. [Installation and developing locally](#installation-and-developing-locally)
-2. [Production Build](#build)
-3. [Usage](#usage)
-4. [Options](#options)
-5. [Example](#example)
+1. [Setup](#setup)
+2. [Options](#options)
+3. [Example](#example)
 
    i. [Google Tag Manager](#google-tag-manager)
 
-6. [Styling](#styling)
+4. [Styling](#styling)
+5. [Developing locally](#developing-locally)
+6. [Production Build](#build)
 
-## Installation and developing locally
-
-1. Clone the repo via `git clone git@github.com:krystal/crumbs.git`
-2. `npm install`
-3. `npm run dev` to start the deveopment server.
-4. Visit [http://localhost:3000](http://localhost:3000)
-
-## Build
-
-`npm run build` will create the minified bundle in the `dist` folder
-
-## Usage
+## Setup
 
 The easiest way to get up and running with Crumbs is to install the package via [npm](https://www.npmjs.com/package/krystal-crumbs).
+
+`npm install krystal-crumbs`
 
 After installation you can then import Crumbs:
 
@@ -47,13 +38,13 @@ const cookies = new Crumbs({
 
 There are a number of options that are required for the Crumbs constructor.
 
-| Option           | Description                                                                                                              | Type        |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------- |
-| cookieName       | The name you would like the give the cookie                                                                              | string      |
-| days             | The duration of the cookie that is set on acceptance                                                                     | number      |
-| domain           | The domain you wish to set the cookie on                                                                                 | string      |
-| editCookieButton | This is an HTMLElement that you want to attach an event listener too in order for the user to change the cookie settings | HTMLElement |
-| types            | An array of objects with each one containing a `identifier`, `summary`, `required` and a `title`                         | object[]    |
+| Option           | Description                                                                                                              | Type        | Required | Default Value    |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------- | -------- | ---------------- |
+| cookieName       | The name you would like the give the cookie                                                                              | string      | No       | 'cookie_consent' |
+| days             | The duration of the cookie that is set on acceptance                                                                     | number      | Yes      | -                |
+| domain           | The domain you wish to set the cookie on                                                                                 | string      | Yes      | -                |
+| editCookieButton | This is an HTMLElement that you want to attach an event listener too in order for the user to change the cookie settings | HTMLElement | Yes      | -                |
+| types            | An array of objects with each one containing an `identifier`, `summary`, `required` and a `title`                        | object[]    | Yes      | -                |
 
 A `type` itself is made up of the following items
 
@@ -68,11 +59,11 @@ Crumbs returns a stringed array of the type cookies that are to be set which are
 
 Behind the scenes Crumbs then sets cookies based on the action of the user. For example, if 'Accept all Cookies' is clicked then Crumbs will set all of the `types` passed to `true`. This will results in the following cookie being set in the browser.
 
-Note: This assumes that you have passed an array of length 3 to the types options.
+Note: This assumes that you have passed an array of length 3 to the `types` options.
 
-| Name           | Value                  |
-| -------------- | ---------------------- |
-| cookie_consent | v1\|true\|true\|true\| |
+| Name           | Value                |
+| -------------- | -------------------- |
+| cookie_consent | v1\|true\|true\|true |
 
 After acceptance the `onSave` event is fired which will provide you with a list of the cookie types that
 have been accepted.
@@ -185,3 +176,14 @@ These are as follows:
 You can import the minified Crumbs stylesheet with the following snippet:
 
 `import "krystal-crumbs/dist/main.css"`
+
+## Developing locally
+
+1. Clone the repo via `git clone git@github.com:krystal/crumbs.git`
+2. `npm install`
+3. `npm run dev` to start the deveopment server.
+4. Visit [http://localhost:3000](http://localhost:3000)
+
+## Build
+
+`npm run build` will create the minified bundle in the `dist` folder
