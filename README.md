@@ -148,9 +148,9 @@ When the cookie preferences are saved our custom GTM event triggers a check of w
 
 If we follow through with our above example and say that we accept the 'functional' and 'analytical' cookie types but reject the 'live chat' option then the cookie value will be:
 
-| Name        | Value                   |
-| ----------- | ----------------------- |
-| cookie_name | v1\|true\|true\|false\| |
+| Name        | Value                 |
+| ----------- | --------------------- |
+| cookie_name | v1\|true\|true\|false |
 
 And our check for the analytics cookie type in GTM will be:
 
@@ -182,6 +182,6 @@ These are as follows:
 }
 ```
 
-You can import the Crumbs stylesheet with the following snippet:
+You can import the minified Crumbs stylesheet with the following snippet:
 
 `import "krystal-crumbs/dist/main.css"`
