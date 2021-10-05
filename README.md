@@ -11,7 +11,7 @@ Node > 10.13
 1. Clone the repo via `git clone git@github.com:krystal/crumbs.git`
 2. `npm install`
 3. `npm run dev` to start the deveopment server.
-4. Visit [http://localhost:4001](http://localhost:4001)
+4. Visit [http://localhost:3000](http://localhost:3000)
 
 ## Build
 
