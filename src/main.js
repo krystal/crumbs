@@ -4,11 +4,21 @@ import { cookieBanner } from "./components/cookieBanner";
 import "./main.css";
 
 class Crumbs extends EventEmitter {
-  constructor({ cookieName, domain, days, editCookieButton, types }) {
+  constructor({
+    banner,
+    cookieName,
+    domain,
+    days,
+    editBanner,
+    editCookieButton,
+    types,
+  }) {
     super();
+    this.banner = banner;
     this.cookieName = cookieName || "cookie_consent";
     this.domain = domain;
     this.days = days;
+    this.editBanner = editBanner;
     this.editCookieButton = editCookieButton;
     this.types = types;
     this.render();
@@ -22,7 +32,8 @@ class Crumbs extends EventEmitter {
     if (!this.getCookie(this.cookieName)) {
       // Create the banner itself as a template literal and add it
       // to the DOM, at the end of the body
-      document.body.insertAdjacentHTML("afterbegin", cookieBanner);
+      const banner = cookieBanner(this.banner);
+      document.body.insertAdjacentHTML("afterbegin", banner);
 
       // As we have created this we can have access to it now for removing later
       this.banner = document.querySelector(".crumbs-banner");
@@ -47,9 +58,10 @@ class Crumbs extends EventEmitter {
     }
 
     // This sets up the editScreen component and adds it to memory for later use
+    const editElement = editScreen(this.editBanner);
     const fragment = document
       .createRange()
-      .createContextualFragment(editScreen);
+      .createContextualFragment(editElement);
     const elementToAdd = fragment.firstElementChild;
     this.editScreen = elementToAdd;
 

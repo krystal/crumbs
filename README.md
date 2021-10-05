@@ -40,13 +40,15 @@ There are a number of options that are required for the Crumbs constructor.
 
 | Option           | Description                                                                                                              | Type        | Required | Default Value    |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------- | -------- | ---------------- |
+| banner           | An object containing both a title and description property for the Crumbs banner                                         | object      | Yes      | -                |
 | cookieName       | The name you would like the give the cookie                                                                              | string      | No       | 'cookie_consent' |
 | days             | The duration of the cookie that is set on acceptance                                                                     | number      | Yes      | -                |
 | domain           | The domain you wish to set the cookie on                                                                                 | string      | Yes      | -                |
+| editBanner       | An object containing both a title and description property for the edit dialog                                           | object      | Yes      | -                |
 | editCookieButton | This is an HTMLElement that you want to attach an event listener too in order for the user to change the cookie settings | HTMLElement | Yes      | -                |
-| types            | An array of objects with each one containing an `identifier`, `summary`, `required` and a `title`                        | object[]    | Yes      | -                |
+| types            | An array of objects with each one containing an `identifier`, `summary`, `required` and a `title`                        | Type[]      | Yes      | -                |
 
-A `type` itself is made up of the following items
+A `Type` itself is made up of the following items
 
 | Option     | Description                                                                                                | Type    | Example                                                       |
 | ---------- | ---------------------------------------------------------------------------------------------------------- | ------- | ------------------------------------------------------------- |
@@ -57,15 +59,15 @@ A `type` itself is made up of the following items
 
 Crumbs returns a stringed array of the type cookies that are to be set which are defined by passing in objects to the `types` array.
 
-Behind the scenes Crumbs then sets cookies based on the action of the user. For example, if 'Accept all Cookies' is clicked then Crumbs will set all of the `types` passed to `true`. This will results in the following cookie being set in the browser.
+Behind the scenes Crumbs then sets cookies based on the action of the user. For example, if 'Accept all Cookies' is clicked then Crumbs will set all of the `types` passed to `true`. This results in the following cookie being set in the browser.
 
-Note: This assumes that you have passed an array of length 3 to the `types` options.
+Note: This assumes that you have passed an array of length 3 to the `types` option.
 
 | Name           | Value                |
 | -------------- | -------------------- |
 | cookie_consent | v1\|true\|true\|true |
 
-After acceptance the `onSave` event is fired which will provide you with a list of the cookie types that
+After acceptance, the `onSave` event is fired which will provide you with a list of the cookie types that
 have been accepted.
 
 ```
@@ -88,8 +90,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const editButton = document.querySelector('.edit-cookies');
 
   const cookies = new Crumbs({
+    banner: {
+      title: 'We use cookies',
+      description: 'Your cookie banner description which should probably include a link to your privacy policy'
+    },
     cookieName: 'cookie_name',
     domain: 'domain.com',
+    editBanner: {
+      title: 'Edit cookie settings',
+      description: 'An explanation of why certain categories of cookies are set'
+    },
     editCookieButtons: editButton,
     days: 365,
     types: [
