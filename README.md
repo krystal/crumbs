@@ -1,10 +1,7 @@
 # Crumbs
 
-A small package that will determine which cookies a user is willing to accept.
-
-## Prerequesites
-
-Node > 10.13
+Crumbs is a small JavaScript library which allows you to declare what types of cookies your site/application
+uses and provides a list of the accepted categories.
 
 ## Installation and developing locally
 
@@ -26,10 +23,14 @@ These are accessed by calling the `onSave` method after instantiation.
 ```
 document.addEventListener('DOMContentLoaded', () => {
 
-  const cookies = new Crumbs();
-  cookies.on('onSave', (preferences) => {
-    // Do some stuff
+  const cookies = new Crumbs({
+    // options here
   });
+
+  cookies.on('onSave', (preferences) => {
+    // Do something with the preferences
+  });
+
 });
 ```
 
@@ -52,17 +53,19 @@ A `type` itself is made up of the following items
 | identifier | The unique name of the type of cookie                                                                      | string  | 'functional'                                                  |
 | required   | A boolean on whether or not this type of cookie is 100% needed for your site/application to be operational | boolean | true                                                          |
 | summary    | An explanation about the type of cookie you are allowing the user to set and why these are being used      | string  | 'A summary of what this type of cookie provides functionally' |
-| title      | A capitalised version of the `identifier` that is used as the heading on the edit dialog popup             | string  | 'Functional'                                                  |
+| title      | A capitalised version of the `identifier` that is used as the heading as part of the edit dialog           | string  | 'Functional'                                                  |
 
-**Example**
+### Example
 
 ```
 document.addEventListener('DOMContentLoaded', () => {
 
+  const editButton = document.querySelector('.edit-cookies');
+
   const cookies = new Crumbs({
     cookieName: 'cookie_name',
-    domain: '.domain.com',
-    editCookieButtons: document.querySelector('.edit-cookies'),
+    domain: 'domain.com',
+    editCookieButtons: editButton,
     days: 365,
     types: [
       {
