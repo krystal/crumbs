@@ -1,7 +1,8 @@
 :root {
   --crumbs-edit-bg: #f4f4f4;
   --crumbs-edit-overlay: rgba(0, 0, 0, 0.4);
-  --crumbs-edit-cta-bg: gainsboro;
+  --crumbs-edit-cta-bg: #dcdcdc;
+  --crumbs-toggle-bg-color: #ffffff;
   --crumbs-toggle-switch-bg: #858585;
   --crumbs-toggle-checked-bg: #e0e0e0;
   --crumbs-toggle-border-color: #dddddd;
@@ -33,7 +34,7 @@
 
 .crumbs-overlay::before {
   background-color: var(--crumbs-edit-overlay);
-  content: '';
+  content: "";
   top: 0;
   left: 0;
   height: 100%;
@@ -148,9 +149,9 @@
 }
 
 .crumbs-toggle__checkbox::after {
-  background: #fff;
+  background: var(--crumbs-toggle-bg-color);
   border-radius: 24px;
-  content: '';
+  content: "";
   height: 25px;
   left: 5px;
   position: absolute;
