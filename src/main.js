@@ -36,7 +36,7 @@ class Crumbs extends EventEmitter {
       document.body.insertAdjacentHTML("afterbegin", banner);
 
       // As we have created this we can have access to it now for removing later
-      this.banner = document.querySelector(".crumbs-banner");
+      this.cookieBanner = document.querySelector(".crumbs-banner");
 
       // Clicking on accept all sets all the cookies and hides the banner
       const acceptCookies = document.querySelector(".crumbs-accept-all");
@@ -46,7 +46,7 @@ class Crumbs extends EventEmitter {
         this.accepted = this.getCookieTypes(this.types);
 
         this.setAcceptanceCookie();
-        this.removeBanner(this.banner);
+        this.removeBanner(this.cookieBanner);
 
         this.emit("onSave", this.accepted);
       });
@@ -291,8 +291,8 @@ class Crumbs extends EventEmitter {
     this.editAcceptButton.removeEventListener("click", this.acceptance);
     document.removeEventListener("keydown", this.setFocusElements);
     this.removeBanner(this.editScreen);
-    if (this.banner) {
-      this.removeBanner(this.banner);
+    if (this.cookieBanner) {
+      this.removeBanner(this.cookieBanner);
     }
     this.emit("onSave", this.accepted);
     this.setAcceptanceCookie();
