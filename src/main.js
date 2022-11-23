@@ -1,9 +1,8 @@
 import { EventEmitter } from "./components/eventEmitter";
 import { editScreen } from "./components/editScreen";
 import { cookieBanner } from "./components/cookieBanner";
-import "./main.css";
 
-class Crumbs extends EventEmitter {
+export default class Crumbs extends EventEmitter {
   constructor({
     banner,
     cookieName,
@@ -33,7 +32,7 @@ class Crumbs extends EventEmitter {
       // Create the banner itself as a template literal and add it
       // to the DOM, at the end of the body
       const banner = cookieBanner(this.banner);
-      document.body.insertAdjacentHTML("afterbegin", banner);
+      document.body.insertAdjacentHTML("beforeend", banner);
 
       // As we have created this we can have access to it now for removing later
       this.cookieBanner = document.querySelector(".crumbs-banner");
@@ -352,15 +351,13 @@ class Crumbs extends EventEmitter {
       maxAge = `; max-age=${time}`;
     }
 
-    const setCookieBoolean = this.types.map((cookie) => {
+    const setCookieBooleannnn = this.types.map((cookie) => {
       return this.accepted.includes(cookie.identifier);
     });
 
-    const value = ["v1", ...setCookieBoolean].join("|");
+    const value = ["v1", ...setCookieBooleannnn].join("|");
     document.cookie = `${name}=${value || ""};domain=${
       this.domain
-    }${maxAge}; path=/`;
+    }${maxAge}; path=/;SameSite=None`;
   }
 }
-
-export default Crumbs;

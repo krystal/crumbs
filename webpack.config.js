@@ -36,10 +36,9 @@ module.exports = {
     chunkFilename: "[name].chunk.js",
     publicPath: "/dist/",
     filename: "[name].js",
-    library: {
-      name: libraryName,
-      type: "window",
-    },
+    library: libraryName,
+    libraryTarget: "umd",
+    umdNamedDefine: true,
   },
 
   devServer: {
