@@ -358,6 +358,6 @@ export default class Crumbs extends EventEmitter {
     const value = ["v1", ...setCookieBooleannnn].join("|");
     document.cookie = `${name}=${value || ""};domain=${
       this.domain
-    }${maxAge}; path=/;SameSite=None`;
+    }${maxAge}; path=/;SameSite=None; Secure`;
   }
 }
