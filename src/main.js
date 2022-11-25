@@ -13,6 +13,7 @@ export default class Crumbs extends EventEmitter {
     types,
   }) {
     super();
+    this.accepted = [];
     this.banner = banner;
     this.cookieName = cookieName || "cookie_consent";
     this.domain = domain;
@@ -65,9 +66,10 @@ export default class Crumbs extends EventEmitter {
     this.editScreen = elementToAdd;
 
     // Add the relevant preferences that have been specified by the types Array
-    this.addPreferences();
 
     this.editCookieButton.addEventListener("click", () => {
+      this.accepted = [];
+      this.addPreferences();
       document.body.insertAdjacentElement("beforeend", this.editScreen);
 
       this.editAccept();
@@ -125,7 +127,11 @@ export default class Crumbs extends EventEmitter {
           name=${identifier}
           id=${identifier}
           class="crumbs-checkbox crumbs__sr"
-          ${required ? 'checked="checked"' : ""}
+          ${
+            required || this.accepted.includes(identifier)
+              ? 'checked="checked"'
+              : ""
+          }
           ${required ? 'disabled="disabled"' : ""}
         />
         <label for=${identifier} class="crumbs-toggle__checkbox ${
@@ -196,6 +202,7 @@ export default class Crumbs extends EventEmitter {
   */
   showSettings() {
     document.body.insertAdjacentElement("beforeend", this.editScreen);
+    this.addPreferences();
     this.prepareFocusableElements();
     this.editAccept();
     this.closeEditScreen();
@@ -253,6 +260,14 @@ export default class Crumbs extends EventEmitter {
       this.editScreen.querySelector("#cookie-categories");
     if (!this.types) {
       return;
+    }
+    cookieTypeWrapper.innerHTML = "";
+    const sliced = this.getCookie(this.cookieName).split("|").slice(1);
+
+    for (let i = 0; i < this.types.length; i++) {
+      if (sliced[i] == "true") {
+        this.accepted.push(this.types[i].identifier);
+      }
     }
 
     this.types.map((type) => {
@@ -351,11 +366,11 @@ export default class Crumbs extends EventEmitter {
       maxAge = `; max-age=${time}`;
     }
 
-    const setCookieBooleannnn = this.types.map((cookie) => {
+    const setCookieBoolean = this.types.map((cookie) => {
       return this.accepted.includes(cookie.identifier);
     });
 
-    const value = ["v1", ...setCookieBooleannnn].join("|");
+    const value = ["v1", ...setCookieBoolean].join("|");
     document.cookie = `${name}=${value || ""};domain=${
       this.domain
     }${maxAge}; path=/;SameSite=None; Secure`;
