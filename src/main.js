@@ -269,8 +269,8 @@ export default class Crumbs extends EventEmitter {
   }
 
   /**
-   * The function that closes the edit cookie settings screen
-   * @param  {Event Object} event The element that we want to set focus on
+   * The function that closes the edit cookie settings screen with the "Escape" key
+   * @param  {Event Object} event The event object
    */
   closeOnEscape(event) {
     if (event.key === "Escape") {
@@ -283,6 +283,10 @@ export default class Crumbs extends EventEmitter {
     }
   }
 
+  /**
+   * The function that closes the edit cookie settings screen when clicking on the backdrop
+   * @param  {Event Object} event The event object
+   */
   closeOnOutsideClick(event) {
     if (this.editScreen.contains(event.target)) return;
     if (event.target === this.editSettingsButton) return;
