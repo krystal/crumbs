@@ -78,6 +78,7 @@ export default class Crumbs extends EventEmitter {
       this.setFocus(this.editScreen);
       this.disableScroll();
       this.setCloseOnEscape();
+      this.setCloseOutside();
     });
   }
 
@@ -144,28 +145,6 @@ export default class Crumbs extends EventEmitter {
   }
 
   /**
-   * The function that closes the edit cookie settings screen
-   * @param  {Event Object} event The element that we want to set focus on
-   */
-  closeOnEscape(event) {
-    if (event.key === "Escape") {
-      if (this.editSettingsButton) {
-        this.setFocus(this.editSettingsButton);
-      }
-      this.editScreen.remove();
-      this.enableScroll();
-      this.editAcceptButton.removeEventListener("click", this.acceptance);
-    }
-  }
-
-  /**
-   * Add event listener to close the edit settings screen
-   */
-  setCloseOnEscape() {
-    document.addEventListener("keydown", this.closeOnEscape.bind(this));
-  }
-
-  /**
    * Prevent scrolling when the edit cookie settings component is open
    */
   disableScroll() {
@@ -209,6 +188,7 @@ export default class Crumbs extends EventEmitter {
     this.setFocus(this.editScreen);
     this.disableScroll();
     this.setCloseOnEscape();
+    this.setCloseOutside();
   }
 
   /**
@@ -286,6 +266,49 @@ export default class Crumbs extends EventEmitter {
     this.editAcceptButton = editAccept;
     this.acceptance = this.acceptCookies.bind(this);
     this.editAcceptButton.addEventListener("click", this.acceptance);
+  }
+
+  /**
+   * The function that closes the edit cookie settings screen with the "Escape" key
+   * @param  {Event Object} event The event object
+   */
+  closeOnEscape(event) {
+    if (event.key === "Escape") {
+      if (this.editSettingsButton) {
+        this.setFocus(this.editSettingsButton);
+      }
+      this.editScreen.remove();
+      this.enableScroll();
+      this.editAcceptButton.removeEventListener("click", this.acceptance);
+    }
+  }
+
+  /**
+   * The function that closes the edit cookie settings screen when clicking on the backdrop
+   * @param  {Event Object} event The event object
+   */
+  closeOnOutsideClick(event) {
+    if (this.editScreen.contains(event.target)) return;
+    if (event.target === this.editSettingsButton) return;
+    if (event.target === this.editCookieButton) return;
+
+    this.enableScroll();
+    this.editScreen.remove();
+    this.editAcceptButton.removeEventListener("click", this.acceptance);
+  }
+
+  /**
+   * Add event listener to close the edit settings screen when using the 'Escape' key
+   */
+  setCloseOnEscape() {
+    document.addEventListener("keydown", this.closeOnEscape.bind(this));
+  }
+
+  /**
+   * Add event listener to close the edit settings screen when clicking on the backdrop
+   */
+  setCloseOutside() {
+    document.addEventListener("click", this.closeOnOutsideClick.bind(this));
   }
 
   /**
