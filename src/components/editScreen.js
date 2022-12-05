@@ -1,6 +1,6 @@
 export const editScreen = ({ title, description }) => {
   return `
-    <div class="crumbs-edit" role="dialog" aria-labelledby="crumbs-dialog-title" aria-describedby="crumbs-dialog-descrption" tabindex="0">
+    <div class="crumbs-edit" role="dialog" aria-labelledby="crumbs-dialog-title" aria-describedby="crumbs-dialog-descrption" tabindex="-1">
       <div class="crumbs-edit__content">
         <div class="crumbs-edit__container">
           <h3 id="crumbs-dialog-title" class="crumbs-edit__title">${title}</h3>

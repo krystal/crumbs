@@ -37,7 +37,10 @@ export default class Crumbs extends EventEmitter {
 
       // As we have created this we can have access to it now for removing later
       this.cookieBanner = document.querySelector(".crumbs-banner");
-
+      this.setFocus(this.cookieBanner);
+      this.prepareFocusableElements(this.cookieBanner);
+      this.bannerTrapFocus = this.trapFocus.bind(this);
+      document.addEventListener("keydown", this.bannerTrapFocus);
       // Clicking on accept all sets all the cookies and hides the banner
       const acceptCookies = document.querySelector(".crumbs-accept-all");
       acceptCookies.addEventListener("click", () => {
@@ -47,7 +50,7 @@ export default class Crumbs extends EventEmitter {
 
         this.setAcceptanceCookie();
         this.removeBanner(this.cookieBanner);
-
+        document.removeEventListener("keydown", this.bannerTrapFocus);
         this.emit("onSave", this.accepted);
       });
 
@@ -71,14 +74,15 @@ export default class Crumbs extends EventEmitter {
       this.accepted = [];
       this.addPreferences();
       document.body.insertAdjacentElement("beforeend", this.editScreen);
-
+      this.setFocus(this.editScreen);
       this.editAccept();
       this.closeEditScreen();
-
-      this.setFocus(this.editScreen);
+      this.prepareFocusableElements(this.editScreen);
       this.disableScroll();
       this.setCloseOnEscape();
       this.setCloseOutside();
+      this.editTrapFocus = this.trapFocus.bind(this);
+      document.addEventListener("keydown", this.editTrapFocus);
     });
   }
 
@@ -127,7 +131,7 @@ export default class Crumbs extends EventEmitter {
           type="checkbox"
           name=${identifier}
           id=${identifier}
-          class="crumbs-checkbox crumbs__sr"
+          class="crumbs-checkbox"
           ${
             required || this.accepted.includes(identifier)
               ? 'checked="checked"'
@@ -181,11 +185,11 @@ export default class Crumbs extends EventEmitter {
   */
   showSettings() {
     document.body.insertAdjacentElement("beforeend", this.editScreen);
+    this.setFocus(this.editScreen);
     this.addPreferences();
-    this.prepareFocusableElements();
+    this.prepareFocusableElements(this.editScreen);
     this.editAccept();
     this.closeEditScreen();
-    this.setFocus(this.editScreen);
     this.disableScroll();
     this.setCloseOnEscape();
     this.setCloseOutside();
@@ -194,17 +198,15 @@ export default class Crumbs extends EventEmitter {
   /**
    * This method will trap the focus within the edit cookies modal
    */
-  prepareFocusableElements() {
+  prepareFocusableElements(el) {
     // We know in advance that we only need to focus on buttons and input elements hence the explicit declaration
     // We also filter out disabled elements as these are not focusable by keyboard
-    const focusableElements = [
-      ...this.editScreen.querySelectorAll("input, button"),
-    ].filter((el) => !el.hasAttribute("disabled"));
+    const focusableElements = [...el.querySelectorAll("input, button")].filter(
+      (el) => !el.hasAttribute("disabled")
+    );
     this.focusable = focusableElements;
     this.firstFocusableEl = this.focusable[0];
     this.lastFocusableEl = this.focusable[this.focusable.length - 1];
-    this.setFocusElements = this.trapFocus.bind(this);
-    document.addEventListener("keydown", this.setFocusElements);
   }
 
   /**
@@ -277,10 +279,15 @@ export default class Crumbs extends EventEmitter {
       if (this.editSettingsButton) {
         this.setFocus(this.editSettingsButton);
       }
-      this.editScreen.remove();
-      this.enableScroll();
-      this.editAcceptButton.removeEventListener("click", this.acceptance);
+      this.editScreenCleanUp();
+      this.removeEventListeners();
     }
+  }
+
+  removeEventListeners() {
+    document.removeEventListener("keydown", this.closeOnEscapeFn);
+    document.removeEventListener("click", this.closeOnOutsideClickFn);
+    document.removeEventListener("keydown", this.editTrapFocus);
   }
 
   /**
@@ -292,23 +299,30 @@ export default class Crumbs extends EventEmitter {
     if (event.target === this.editSettingsButton) return;
     if (event.target === this.editCookieButton) return;
 
-    this.enableScroll();
-    this.editScreen.remove();
-    this.editAcceptButton.removeEventListener("click", this.acceptance);
+    this.editScreenCleanUp();
+    this.removeEventListeners();
   }
 
   /**
    * Add event listener to close the edit settings screen when using the 'Escape' key
    */
   setCloseOnEscape() {
-    document.addEventListener("keydown", this.closeOnEscape.bind(this));
+    this.closeOnEscapeFn = this.closeOnEscape.bind(this);
+    document.addEventListener("keydown", this.closeOnEscapeFn);
+  }
+
+  editScreenCleanUp() {
+    this.enableScroll();
+    this.editScreen.remove();
+    this.editAcceptButton.removeEventListener("click", this.acceptance);
   }
 
   /**
    * Add event listener to close the edit settings screen when clicking on the backdrop
    */
   setCloseOutside() {
-    document.addEventListener("click", this.closeOnOutsideClick.bind(this));
+    this.closeOnOutsideClickFn = this.closeOnOutsideClick.bind(this);
+    document.addEventListener("click", this.closeOnOutsideClickFn);
   }
 
   /**
@@ -326,7 +340,8 @@ export default class Crumbs extends EventEmitter {
     this.accepted = accepted;
 
     this.editAcceptButton.removeEventListener("click", this.acceptance);
-    document.removeEventListener("keydown", this.setFocusElements);
+    document.removeEventListener("keydown", this.bannerTrapFocus);
+
     this.removeBanner(this.editScreen);
     if (this.cookieBanner) {
       this.removeBanner(this.cookieBanner);
@@ -335,6 +350,7 @@ export default class Crumbs extends EventEmitter {
     this.setAcceptanceCookie();
 
     this.enableScroll();
+    this.removeEventListeners();
   }
 
   /**
