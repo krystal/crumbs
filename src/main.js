@@ -37,7 +37,10 @@ export default class Crumbs extends EventEmitter {
 
       // As we have created this we can have access to it now for removing later
       this.cookieBanner = document.querySelector(".crumbs-banner");
-      this.setFocus(this.cookieBanner);
+      this.chooseCookiesButton = document.querySelector(
+        ".crumbs-edit-settings"
+      );
+      this.chooseCookiesButton.focus();
       this.prepareFocusableElements(this.cookieBanner);
       this.bannerTrapFocus = this.trapFocus.bind(this);
       document.addEventListener("keydown", this.bannerTrapFocus);
