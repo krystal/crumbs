@@ -11,6 +11,7 @@ export default class Crumbs extends EventEmitter {
     editBanner,
     editCookieButton,
     types,
+    version,
   }) {
     super();
     this.accepted = [];
@@ -21,6 +22,7 @@ export default class Crumbs extends EventEmitter {
     this.editBanner = editBanner;
     this.editCookieButton = editCookieButton;
     this.types = types;
+    this.version = version || 1;
     this.render();
   }
 
@@ -412,7 +414,7 @@ export default class Crumbs extends EventEmitter {
       return this.accepted.includes(cookie.identifier);
     });
 
-    const value = ["v1", ...setCookieBoolean].join("|");
+    const value = [`v${this.version}`, ...setCookieBoolean].join("|");
     document.cookie = `${name}=${value || ""};domain=${
       this.domain
     }${maxAge}; path=/;SameSite=None; Secure`;
