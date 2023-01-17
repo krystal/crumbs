@@ -47,6 +47,7 @@ There are a number of options that are required for the Crumbs constructor.
 | editBanner       | An object containing both a title and description property for the edit dialog                                           | object      | Yes      | -                |
 | editCookieButton | This is an HTMLElement that you want to attach an event listener too in order for the user to change the cookie settings | HTMLElement | Yes      | -                |
 | types            | An array of objects with each one containing an `identifier`, `summary`, `required` and a `title`                        | Type[]      | Yes      | -                |
+| version          | The version number you wish to specify                                                                                   | Number      | No       | 1                |
 
 A `Type` itself is made up of the following items
 
@@ -61,7 +62,7 @@ Crumbs returns a stringed array of the type cookies that are to be set which are
 
 Behind the scenes Crumbs then sets cookies based on the action of the user. For example, if 'Accept all Cookies' is clicked then Crumbs will set all of the `types` passed to `true`. This results in the following cookie being set in the browser.
 
-Note: This assumes that you have passed an array of length 3 to the `types` option.
+Note: This assumes that you have passed an array of length 3 to the `types` option. The `version` number will also differ if you provide this option to the Crumbs constructor.
 
 | Name           | Value                |
 | -------------- | -------------------- |
