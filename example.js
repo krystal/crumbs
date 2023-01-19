@@ -1,10 +1,13 @@
+import Crumbs from "./src/main.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   const editCookieButton = document.querySelector(".edit-cookies");
+  const list = document.querySelector(".accepted-cookies");
 
   const cookies = new Crumbs({
     banner: {
       title: "We use cookies",
-      description: "Test",
+      description: "Test description",
     },
     days: 365,
     domain: "localhost",
@@ -37,4 +40,17 @@ document.addEventListener("DOMContentLoaded", () => {
       },
     ],
   });
+
+  cookies.on("onSave", (preferences) => {
+    emptyList();
+    preferences.forEach((preference) => {
+      const li = document.createElement("li");
+      li.textContent = preference;
+      list.append(li);
+    });
+  });
+
+  function emptyList() {
+    list.innerHTML = "";
+  }
 });
