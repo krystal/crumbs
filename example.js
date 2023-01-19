@@ -3,7 +3,7 @@ import Crumbs from "./lib/main.js";
 document.addEventListener("DOMContentLoaded", () => {
   const editCookieButton = document.querySelector(".edit-cookies");
   const list = document.querySelector(".accepted-cookies");
-
+  console.log(Crumbs);
   const cookies = new Crumbs({
     banner: {
       title: "We use cookies",

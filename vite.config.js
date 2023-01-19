@@ -7,10 +7,9 @@ export default defineConfig({
       entry: path.resolve(__dirname, "lib/main.js"),
       name: "Crumbs",
       fileName: "crumbs",
-      formats: ["es", "cjs", "umd"],
+      formats: ["es"],
     },
     minify: "terser",
-    target: "es2015",
   },
   server: {
     port: 3000,
