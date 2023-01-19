@@ -13,6 +13,7 @@
   --crumbs-toggle-border-color: #dddddd;
   --crumbs-toggle-switch-focus-border-color: #636363;
 }
+
 body {
   display: flex;
   font-family: "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -20,16 +21,13 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
-article {
-  padding: 0 20px;
-}
-article p + p {
-  margin-top: 12px;
-}
+
 .crumbs-banner {
   border: 1px solid;
   border-radius: 4px;
   bottom: 5%;
+  display: flex;
+  justify-content: space-between;
   left: 50%;
   margin: auto;
   max-width: 1240px;
