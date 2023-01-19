@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 :root {
   --crumbs-edit-bg: #f4f4f4;
   --crumbs-edit-overlay: rgba(0, 0, 0, 0.4);
@@ -21,6 +22,8 @@ body {
   flex-direction: column;
   min-height: 100vh;
 }
+
+/* Crumbs styling */
 
 .crumbs-banner {
   border: 1px solid;
@@ -247,4 +250,22 @@ body {
   .crumbs-banner__content {
     flex: 0 1 60%;
   }
+}
+
+/* Basic styling for developing locally */
+
+h1,
+h2 {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.accepted-cookies {
+  list-style: none;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.edit-cookies {
+  margin: auto;
 }
