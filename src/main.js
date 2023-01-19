@@ -11,7 +11,8 @@ export default class Crumbs extends EventEmitter {
     editBanner,
     editCookieButton,
     types,
-    version,
+    unsetOutdatedVersions = false,
+    version = 1,
   }) {
     super();
     this.accepted = [];
@@ -22,7 +23,8 @@ export default class Crumbs extends EventEmitter {
     this.editBanner = editBanner;
     this.editCookieButton = editCookieButton;
     this.types = types;
-    this.version = version || 1;
+    this.version = version;
+    this.unsetOutdatedVersions = unsetOutdatedVersions;
     this.render();
   }
 
@@ -30,8 +32,21 @@ export default class Crumbs extends EventEmitter {
    * Render the cookie banner and attach various elements
    */
   render() {
+    // The current value for the Crumbs cookie
+    let cookieValue = this.getCookie(this.cookieName);
+
+    // If the cookie is presented but it's an outdated version - reset it
+    if (
+      cookieValue &&
+      this.unsetOutdatedVersions &&
+      this.getVersion(cookieValue) < this.version
+    ) {
+      cookieValue = null;
+      this.clearCookie(this.cookieName);
+    }
+
     // Render the Cookie banner if the cookie_consent cookie isn't true
-    if (!this.getCookie(this.cookieName)) {
+    if (!cookieValue) {
       // Create the banner itself as a template literal and add it
       // to the DOM, at the end of the body
       const banner = cookieBanner(this.banner);
@@ -358,6 +373,10 @@ export default class Crumbs extends EventEmitter {
     this.removeEventListeners();
   }
 
+  clearCookie(cookieName) {
+    document.cookie = `${cookieName}="";domain=${this.domain};path=/;SameSite=None;Secure;expires=Thu, 01 Jan 1970 00:00:01 GMT`;
+  }
+
   /**
    * Find out if the cookie_consent cookie is set
    * @param  {String} cookieName The name of the cookie we are checking
@@ -381,6 +400,16 @@ export default class Crumbs extends EventEmitter {
     }
 
     return "";
+  }
+
+  getVersion(value) {
+    if (!value || typeof value !== "string") return null;
+    const parts = value.split("|");
+    if (parts.length === 1) return null;
+    const versionStr = parts[0];
+    const match = versionStr.match(/v(\d+)/);
+    if (!match) return null;
+    return parseInt(match[1]);
   }
 
   /**
@@ -410,9 +439,9 @@ export default class Crumbs extends EventEmitter {
       maxAge = `; max-age=${time}`;
     }
 
-    const setCookieBoolean = this.types.map((cookie) => {
-      return this.accepted.includes(cookie.identifier);
-    });
+    const setCookieBoolean = this.types.map((cookie) =>
+      this.accepted.includes(cookie.identifier).toString()
+    );
 
     const value = [`v${this.version}`, ...setCookieBoolean].join("|");
     document.cookie = `${name}=${value || ""};domain=${
