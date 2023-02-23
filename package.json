@@ -4,7 +4,6 @@
   "files": [
     "dist"
   ],
-  "version": "0.1.9",
   "description": "A cookie consent plugin",
   "main": "./dist/crumbs.js",
   "module": "./dist/crumbs.mjs",
