@@ -1,9 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 :root {
   --crumbs-edit-bg: #f4f4f4;
   --crumbs-edit-overlay: rgba(0, 0, 0, 0.4);
@@ -13,14 +7,6 @@
   --crumbs-toggle-checked-bg: #e0e0e0;
   --crumbs-toggle-border-color: #dddddd;
   --crumbs-toggle-switch-focus-border-color: #636363;
-}
-
-body {
-  display: flex;
-  font-family: "Avenir", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  flex-direction: column;
-  min-height: 100vh;
 }
 
 /* Crumbs styling */
@@ -250,22 +236,4 @@ body {
   .crumbs-banner__content {
     flex: 0 1 60%;
   }
-}
-
-/* Basic styling for developing locally */
-
-h1,
-h2 {
-  margin: 1rem 0;
-  text-align: center;
-}
-
-.accepted-cookies {
-  list-style: none;
-  margin-top: 16px;
-  text-align: center;
-}
-
-.edit-cookies {
-  margin: auto;
 }

@@ -68,11 +68,11 @@ Note: This assumes that you have passed an array of length 3 to the `types` opti
 | -------------- | -------------------- |
 | cookie_consent | v1\|true\|true\|true |
 
-After acceptance, the `onSave` event is fired which will provide you with a list of the cookie types that
+After acceptance, the `save` event is fired which will provide you with a list of the cookie types that
 have been accepted.
 
 ```
-cookies.on('onSave', (preferences) => {
+cookies.on('save', (preferences) => {
   // Do something with the preferences
   // The 'preferences' here will look like this:
   // ['functional', 'analytics']
@@ -135,10 +135,10 @@ This is a good start however, we can take this further and use Crumbs in conjunc
 
 ### Google Tag Manager
 
-As previously mentioned you can listen for the `onSave` event to determine when the cookie preferences have been accepted and in here is where we want to access the `dataLayer` provided by Google Tag Manager (GTM).
+As previously mentioned you can listen for the `save` event to determine when the cookie preferences have been accepted and in here is where we want to access the `dataLayer` provided by Google Tag Manager (GTM).
 
 ```
-cookies.on('onSave', () => {
+cookies.on('save', () => {
 	window.dataLayer &&
     window.dataLayer.push({
 	    event: "your-custom-event-name-here"
