@@ -44,7 +44,7 @@ There are a number of options that are required for the Crumbs constructor.
 | domain           | The domain you wish to set the cookie on                                                                                 | string      | Yes      | -                |
 | editBanner       | An object containing both a title and description property for the edit dialog                                           | object      | Yes      | -                |
 | editCookieButton | This is an HTMLElement that you want to attach an event listener too in order for the user to change the cookie settings | HTMLElement | Yes      | -                |
-| types            | An array of objects with each one containing an `identifier`, `summary`, `required` and a `title`                        | Type[]      | Yes      | -                |
+| types            | An array of objects with each one containing an `identifier`, `summary`, and a `title`                        | Type[]      | No      | -                |
 | version          | The version number you wish to specify                                                                                   | Number      | No       | 1                |
 
 A `Type` itself is made up of the following items
