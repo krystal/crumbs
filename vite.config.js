@@ -5,9 +5,9 @@ export default defineConfig({
   build: {
     lib: {
       entry: path.resolve(__dirname, "lib/index.js"),
-      name: "Crumbs",
       fileName: "crumbs",
       formats: ["es"],
+      name: "Crumbs",
     },
     minify: "terser",
   },

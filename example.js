@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
       title: "Edit cookies",
     },
     editCookieButton,
-    types: [{ identifier: "ad_personalization" }],
+    types: [{ identifier: "ad_personalization" }, { identifier: "ad_storage" }],
     version: 1,
   });
 
