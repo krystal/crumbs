@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1](https://github.com/krystal/crumbs/compare/v0.2.0...v0.2.1) (2024-10-21)
+
+
+### Features
+
+* allow default types ([dd0a12d](https://github.com/krystal/crumbs/commit/dd0a12d607eddb364b08754e4a478eca1dd6ef68))
+* export helper functions and constants ([e782459](https://github.com/krystal/crumbs/commit/e78245997288800a43a1967be4190670f96d48a8))
+
 ## [0.2.0](https://github.com/krystal/crumbs/compare/v0.1.9...v0.2.0) (2024-10-21)
 
 
