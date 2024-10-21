@@ -8,9 +8,7 @@ uses and provides a list of the accepted categories.
 1. [Setup](#setup)
 2. [Options](#options)
 3. [Example](#example)
-
-   i. [Google Tag Manager](#google-tag-manager)
-
+  i. [Google Tag Manager](#google-tag-manager)
 4. [Styling](#styling)
 5. [Developing locally](#developing-locally)
 6. [Production Build](#build)
@@ -19,7 +17,7 @@ uses and provides a list of the accepted categories.
 
 The easiest way to get up and running with Crumbs is to install the package via [npm](https://www.npmjs.com/package/krystal-crumbs).
 
-`npm install krystal-crumbs`
+`npm install -S krystal-crumbs`
 
 After installation you can then import Crumbs:
 
@@ -41,7 +39,7 @@ There are a number of options that are required for the Crumbs constructor.
 | Option           | Description                                                                                                              | Type        | Required | Default Value    |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------- | -------- | ---------------- |
 | banner           | An object containing both a title and description property for the Crumbs banner                                         | object      | Yes      | -                |
-| cookieName       | The name you would like the give the cookie                                                                              | string      | No       | 'cookie_consent' |
+| name       | The name you would like the give the cookie                                                                              | string      | No       | 'crumbs' |
 | days             | The duration of the cookie that is set on acceptance                                                                     | number      | Yes      | -                |
 | domain           | The domain you wish to set the cookie on                                                                                 | string      | Yes      | -                |
 | editBanner       | An object containing both a title and description property for the edit dialog                                           | object      | Yes      | -                |
@@ -66,13 +64,13 @@ Note: This assumes that you have passed an array of length 3 to the `types` opti
 
 | Name           | Value                |
 | -------------- | -------------------- |
-| cookie_consent | v1\|true\|true\|true |
+| crumbs | v1\|true\|true\|true |
 
-After acceptance, the `onSave` event is fired which will provide you with a list of the cookie types that
+After acceptance, the `save` event is fired which will provide you with a list of the cookie types that
 have been accepted.
 
 ```
-cookies.on('onSave', (preferences) => {
+cookies.on('save', (preferences) => {
   // Do something with the preferences
   // The 'preferences' here will look like this:
   // ['functional', 'analytics']
@@ -135,10 +133,10 @@ This is a good start however, we can take this further and use Crumbs in conjunc
 
 ### Google Tag Manager
 
-As previously mentioned you can listen for the `onSave` event to determine when the cookie preferences have been accepted and in here is where we want to access the `dataLayer` provided by Google Tag Manager (GTM).
+As previously mentioned you can listen for the `save` event to determine when the cookie preferences have been accepted and in here is where we want to access the `dataLayer` provided by Google Tag Manager (GTM).
 
 ```
-cookies.on('onSave', () => {
+cookies.on('save', () => {
 	window.dataLayer &&
     window.dataLayer.push({
 	    event: "your-custom-event-name-here"

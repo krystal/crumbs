@@ -4,10 +4,10 @@ import { defineConfig } from "vite";
 export default defineConfig({
   build: {
     lib: {
-      entry: path.resolve(__dirname, "lib/main.js"),
-      name: "Crumbs",
+      entry: path.resolve(__dirname, "lib/index.js"),
       fileName: "crumbs",
       formats: ["es"],
+      name: "Crumbs",
     },
     minify: "terser",
   },

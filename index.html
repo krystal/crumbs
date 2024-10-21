@@ -7,16 +7,44 @@
     <link rel="stylesheet" href="./lib/styles/main.css" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <title>Crumbs</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        font-family: system-ui, sans-serif;
+        min-height: 100vh;
+      }
+
+      h1,
+      h2 {
+        margin: 1rem 0;
+        text-align: center;
+      }
+
+      .accepted {
+        list-style: none;
+        margin-top: 16px;
+        text-align: center;
+      }
+
+      .edit {
+        margin: auto;
+      }
+    </style>
   </head>
   <body>
     <h1>Crumbs</h1>
     <div>
-      <h2>You are ok with the following cookies being set:</h2>
-      <ul class="accepted-cookies"></ul>
+      <h2>You have accepted the following consent types:</h2>
+      <ul class="accepted js-accepted"></ul>
     </div>
-
-    <button class="edit-cookies">Edit cookie settings</button>
-
+    <button class="edit js-edit">Edit cookie settings</button>
     <script type="module" src="example.js"></script>
   </body>
 </html>
