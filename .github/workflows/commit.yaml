@@ -16,7 +16,7 @@ jobs:
         with:
           app_id: ${{ vars.RELEASE_PLEASE_GITHUB_APP_ID }}
           private_key: ${{ secrets.RELEASE_PLEASE_GITHUB_APP_PRIVATE_KEY }}
-      - uses: google-github-actions/release-please-action@v4
+      - uses: googleapis/release-please-action@v4
         id: release-please
         with:
           token: ${{ steps.generate-github-token.outputs.token }}
