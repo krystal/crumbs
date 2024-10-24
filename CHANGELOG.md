@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.2](https://github.com/krystal/crumbs/compare/v0.2.1...v0.2.2) (2024-10-24)
+
+
+### Bug Fixes
+
+* ci ([1b3d874](https://github.com/krystal/crumbs/commit/1b3d874fb5bbf7b5b7b8330895e1925bb0ced5fe))
+
 ## [0.2.1](https://github.com/krystal/crumbs/compare/v0.2.0...v0.2.1) (2024-10-21)
 
 
