@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.3](https://github.com/krystal/crumbs/compare/v0.2.2...v0.2.3) (2024-10-25)
+
+
+### Features
+
+* allow gtm broadcast to be of type default or update ([940b6de](https://github.com/krystal/crumbs/commit/940b6de1b14dbd478a74be23b5f8cfbbc996144f))
+
 ## [0.2.2](https://github.com/krystal/crumbs/compare/v0.2.1...v0.2.2) (2024-10-24)
 
 
