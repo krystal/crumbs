@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.4](https://github.com/krystal/crumbs/compare/v0.2.3...v0.2.4) (2024-10-25)
+
+
+### Bug Fixes
+
+* correctly set this context in migration function ([e7e0a55](https://github.com/krystal/crumbs/commit/e7e0a5578475ee5e35cfaadaed64d474f46ec24e))
+* set new accepted after migration ([2943d06](https://github.com/krystal/crumbs/commit/2943d0661738fbecb3ccf0d2bded3d6a28c397b2))
+
 ## [0.2.3](https://github.com/krystal/crumbs/compare/v0.2.2...v0.2.3) (2024-10-25)
 
 
