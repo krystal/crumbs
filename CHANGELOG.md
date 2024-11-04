@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.5](https://github.com/krystal/crumbs/compare/v0.2.4...v0.2.5) (2024-11-04)
+
+
+### Features
+
+* allow crumbs to be loaded on the server ([719b89a](https://github.com/krystal/crumbs/commit/719b89a5c17a162514d729a3c7e3226cff7ce05b))
+
 ## [0.2.4](https://github.com/krystal/crumbs/compare/v0.2.3...v0.2.4) (2024-10-25)
 
 
