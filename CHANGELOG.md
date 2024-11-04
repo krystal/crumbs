@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.6](https://github.com/krystal/crumbs/compare/v0.2.5...v0.2.6) (2024-11-04)
+
+
+### Bug Fixes
+
+* default types not being broadcast correctly ([3daf34f](https://github.com/krystal/crumbs/commit/3daf34fd849c2c51827272791f38ee25738aa091))
+
 ## [0.2.5](https://github.com/krystal/crumbs/compare/v0.2.4...v0.2.5) (2024-11-04)
 
 
