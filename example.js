@@ -1,4 +1,4 @@
-import Crumbs from "./lib";
+import Crumbs, { parseAccepted } from "./lib";
 
 document.addEventListener("DOMContentLoaded", () => {
   const editCookieButton = document.querySelector(".js-edit");
