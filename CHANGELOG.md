@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.7](https://github.com/krystal/crumbs/compare/v0.2.6...v0.2.7) (2025-02-26)
+
+
+### Bug Fixes
+
+* **security:** set the HttpOnly cookie attribute ([#22](https://github.com/krystal/crumbs/issues/22)) ([e6c5f23](https://github.com/krystal/crumbs/commit/e6c5f234f34514f8317b79a82e115dd70ea834a8))
+
 ## [0.2.6](https://github.com/krystal/crumbs/compare/v0.2.5...v0.2.6) (2024-11-04)
 
 
