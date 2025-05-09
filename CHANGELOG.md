@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.8](https://github.com/krystal/crumbs/compare/v0.2.7...v0.2.8) (2025-05-09)
+
+
+### Features
+
+* trigger custom crumbs_consent_update event ([75d41b6](https://github.com/krystal/crumbs/commit/75d41b671342ff47e0b4ee799892d1c39265d8e3))
+
 ## [0.2.7](https://github.com/krystal/crumbs/compare/v0.2.6...v0.2.7) (2025-02-26)
 
 
