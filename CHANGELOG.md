@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.9](https://github.com/krystal/crumbs/compare/v0.2.8...v0.2.9) (2025-07-25)
+
+
+### Bug Fixes
+
+* httponly ([b407d35](https://github.com/krystal/crumbs/commit/b407d35da4906b3ef73376eeb4f779f60aa54a1c))
+
 ## [0.2.8](https://github.com/krystal/crumbs/compare/v0.2.7...v0.2.8) (2025-05-09)
 
 
