@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.11](https://github.com/krystal/crumbs/compare/v0.2.10...v0.2.11) (2025-09-22)
+
+
+### Bug Fixes
+
+* package.json ([37470c1](https://github.com/krystal/crumbs/commit/37470c13cf9193d01b79e75331863b18703ff369))
+
 ## [0.2.10](https://github.com/krystal/crumbs/compare/v0.2.9...v0.2.10) (2025-09-22)
 
 
