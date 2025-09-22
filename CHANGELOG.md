@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.10](https://github.com/krystal/crumbs/compare/v0.2.9...v0.2.10) (2025-09-22)
+
+
+### Features
+
+* fire update rather than default ([60aa302](https://github.com/krystal/crumbs/commit/60aa302cf5fd81ab56e76aedba7e149088099de2))
+
 ## [0.2.9](https://github.com/krystal/crumbs/compare/v0.2.8...v0.2.9) (2025-07-25)
 
 
