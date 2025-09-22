@@ -21,7 +21,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/krystal/crumbs"
+    "url": "git+https://github.com/krystal/crumbs.git"
   },
   "bugs": {
     "url": "https://github.com/krystal/crumbs/issues"
